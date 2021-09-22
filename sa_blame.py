@@ -91,7 +91,7 @@ for line in sysd_out.split("\n"):
     if (minutes and seconds):
         min = minutes[0].strip("min")
         sec = seconds[0].strip("s")
-        etime = (min * 60) + sec
+        etime = (int(min) * 60) + float(sec)
     elif (seconds and not minutes):
         etime = seconds[0].strip("s")
     elif millisec:
