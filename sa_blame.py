@@ -104,15 +104,15 @@ for line in sysd_out.split("\n"):
     if (minutes and seconds):
         min = minutes[0].strip("min")
         sec = seconds[0].strip("s")
-        etime = (int(min) * 60) + float(sec)
+        etime = str((int(min) * 60) + float(sec))
     elif (seconds and not minutes):
         etime = seconds[0].strip("s")
     elif millisec:
         ms = millisec[0].strip("ms")
-        etime = (int(ms)/1000)%60
+        etime = str((int(ms)/1000)%60)
 
     if (service and etime):
-        print(f'{service}: {etime}')            # DEBUG
+##        print(f'{service}: {etime}')            # DEBUG
         data_point['test_data'][service] = etime
 
 
