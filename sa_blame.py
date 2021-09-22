@@ -76,6 +76,19 @@ if not sysctl_out:
 else:
     tc_values.insert(4, sysctl_out.strip())
 
+####################################
+# define json struct for data points
+data_point = {
+        'date': curtime,
+        'test_config': {
+             tc_list[0]: tc_values[0],
+             tc_list[1]: tc_values[1],
+             tc_list[2]: tc_values[2],
+             tc_list[3]: tc_values[3],
+             tc_list[4]: tc_values[4]},
+        'test_data': { }
+        }
+
 ##########################
 # Exec systemd-analyze cmd
 sysd_out = subprocess.run(['systemd-analyze', 'blame'], stdout=subprocess.PIPE)
@@ -100,31 +113,13 @@ for line in sysd_out.split("\n"):
 
     if (service and etime):
         print(f'{service}: {etime}')            # DEBUG
+        data_point['test_data'][service] = etime
 
-# DEBUG
-exit()
-
-
-####################################
-# define json struct for data points
-data_point = {
-        'date': curtime,
-        'test_config': {
-             tc_list[0]: tc_values[0],
-             tc_list[1]: tc_values[1],
-             tc_list[2]: tc_values[2],
-             tc_list[3]: tc_values[3],
-             tc_list[4]: tc_values[4]},
-        'test_data': {
-             td_list[0]: td_values[0],
-             td_list[1]: td_values[1],
-             td_list[2]: td_values[2]}
-        }
 
 # Write JSON file
 with io.open('data.json', 'w', encoding='utf8') as outfile:
     str_ = json.dumps(data_point,
-                      indent=4, sort_keys=True,
+                      indent=4, sort_keys=False,
                       separators=(',', ': '), ensure_ascii=False)
     outfile.write(to_unicode(str_))
     outfile.write(to_unicode("\n"))
