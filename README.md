@@ -12,16 +12,16 @@ Collection of scripts useful to investigate linux boot-time
     {
         "date": "2021-09-22T16:05:44.621685Z",
         "test_config": {
-        "cpumodel": "Cortex-A72",
-        "kversion": "5.4.60-v8.1.el8",
-        "maxMHz": "1500.0000",
-        "numcores": "4",
-        "systemtgt": "multi-user.target"
-    },
-     "test_data": {
-         "initrd": "NULL",
-         "kernel": "1.983",
-         "userspace": "29.270"
+            "cpumodel": "Cortex-A72",
+            "kversion": "5.4.60-v8.1.el8",
+            "maxMHz": "1500.0000",
+            "numcores": "4",
+            "systemtgt": "multi-user.target"
+        },
+        "test_data": {
+            "initrd": "NULL",
+            "kernel": "1.983",
+            "userspace": "29.270"
         }
     }
 
