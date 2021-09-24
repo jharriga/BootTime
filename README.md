@@ -1,6 +1,11 @@
 # BootTime
+Collection of scripts useful to investigate linux boot-time 
 
-## sample output
+* sa_time.py : produces data.json from 'systemd-analyze time'
+* sa_blame : produces data.json from 'systemd-analyze blame'
+
+
+## Sample output
 
     [root@rpi4 SchemaES]# python3.6 sa_time.py
     [root@rpi4 SchemaES]# cat data.json
