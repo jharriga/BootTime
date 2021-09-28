@@ -32,7 +32,7 @@ kversion_out = kversion_out.stdout.decode('utf-8')
 tc_values.insert(0, kversion_out.strip())
 
 # Linux Distro
-tc_values.insert(1, distro.linux_distribution(pretty=True))
+tc_values.insert(1, distro.name(pretty=True))
 
 # cpu test config values
 ##cpuinfo_out = subprocess.run(['cat', '/proc/cpuinfo'], stdout=subprocess.PIPE)
