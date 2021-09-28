@@ -3,7 +3,7 @@ Collection of scripts useful to investigate linux boot-time
 
 * sa_time.py : produces data.json from 'systemd-analyze time'
 * sa_blame : produces data.json from 'systemd-analyze blame'
-
+NOTE: requires 'pip3.6 import distro'
 
 ## Sample output
 
