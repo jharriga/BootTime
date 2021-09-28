@@ -9,10 +9,11 @@ import re
 import platform
 import json
 import io
+import distro
 to_unicode = str
 
 # Test configuration lists
-tc_list = ["kversion", "cpumodel", "numcores", "maxMHz", "systemtgt"]
+tc_list = ["kversion", "distro", "cpumodel", "numcores", "maxMHz", "systemtgt"]
 tc_values = []
 # Test data lists
 td_list = ["kernel", "initrd", "userspace"]
@@ -30,6 +31,9 @@ kversion_out = subprocess.run(['uname', '-r'], stdout=subprocess.PIPE)
 kversion_out = kversion_out.stdout.decode('utf-8')
 tc_values.insert(0, kversion_out.strip())
 
+# Linux distro name
+tc_values.insert(1, distro.name(pretty=True))
+
 # cpu test config values
 ##cpuinfo_out = subprocess.run(['cat', '/proc/cpuinfo'], stdout=subprocess.PIPE)
 cpuinfo_out = subprocess.run(['lscpu'], stdout=subprocess.PIPE)
@@ -41,9 +45,9 @@ for line in cpuinfo_out.split("\n"):
 ##        print(model.strip())          # DEBUG
 # Check for value
 if not model:
-    tc_values.insert(1, 'NULL')
+    tc_values.insert(2, 'NULL')
 else:
-    tc_values.insert(1, model.lstrip())
+    tc_values.insert(2, model.lstrip())
 
 # number of cores
 for line in cpuinfo_out.split("\n"):
@@ -52,9 +56,9 @@ for line in cpuinfo_out.split("\n"):
 ##        print(numcores.strip())           # DEBUG
 # Check for value
 if not numcores:
-    tc_values.insert(2, 'NULL')
+    tc_values.insert(3, 'NULL')
 else:
-    tc_values.insert(2, numcores.strip())
+    tc_values.insert(3, numcores.strip())
 
 # CPU max MHz
 for line in cpuinfo_out.split("\n"):
@@ -63,18 +67,18 @@ for line in cpuinfo_out.split("\n"):
 ##        print(maxmhz.strip())           # DEBUG
 # Check for value
 if not maxmhz:
-    tc_values.insert(3, 'NULL')
+    tc_values.insert(4, 'NULL')
 else:
-    tc_values.insert(3, maxmhz.strip())
+    tc_values.insert(4, maxmhz.strip())
 
 # systemctl target
 sysctl_out = subprocess.run(['systemctl', 'get-default'], stdout=subprocess.PIPE)
 sysctl_out = sysctl_out.stdout.decode('utf-8')
 # Check for value
 if not sysctl_out:
-    tc_values.insert(4, 'NULL')
+    tc_values.insert(5, 'NULL')
 else:
-    tc_values.insert(4, sysctl_out.strip())
+    tc_values.insert(5, sysctl_out.strip())
 
 ##########################
 # Exec systemd-analyze cmd
@@ -99,7 +103,8 @@ data_point = {
              tc_list[1]: tc_values[1],
              tc_list[2]: tc_values[2],
              tc_list[3]: tc_values[3],
-             tc_list[4]: tc_values[4]},
+             tc_list[4]: tc_values[4],
+             tc_list[5]: tc_values[5]},
         'test_data': {
              td_list[0]: td_values[0],
              td_list[1]: td_values[1],
