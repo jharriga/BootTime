@@ -1,4 +1,4 @@
-# SA_BLAME.py                EDITS: Sept 22
+# SA_BLAME.py
 # test script to produce bmark-wrapper json input
 # Executes and parses 'systemd-analyze blame' cmd
 # USAGE: python3.6 sa_blame.py
@@ -45,7 +45,7 @@ for line in cpuinfo_out.split("\n"):
 ##        print(model.strip())          # DEBUG
 # Check for value
 if not model:
-    tc_values.insert(2, 'NULL')
+    tc_values.insert(2, "")
 else:
     tc_values.insert(2, model.lstrip())
 
@@ -56,7 +56,7 @@ for line in cpuinfo_out.split("\n"):
 ##        print(numcores.strip())           # DEBUG
 # Check for value
 if not numcores:
-    tc_values.insert(3, 'NULL')
+    tc_values.insert(3, "")
 else:
     tc_values.insert(3, numcores.strip())
 
@@ -67,7 +67,7 @@ for line in cpuinfo_out.split("\n"):
 ##        print(maxmhz.strip())           # DEBUG
 # Check for value
 if not maxmhz:
-    tc_values.insert(4, 'NULL')
+    tc_values.insert(4, "")
 else:
     tc_values.insert(4, maxmhz.strip())
 
@@ -76,7 +76,7 @@ sysctl_out = subprocess.run(['systemctl', 'get-default'], stdout=subprocess.PIPE
 sysctl_out = sysctl_out.stdout.decode('utf-8')
 # Check for value
 if not sysctl_out:
-    tc_values.insert(5, 'NULL')
+    tc_values.insert(5, "")
 else:
     tc_values.insert(5, sysctl_out.strip())
 
@@ -117,12 +117,11 @@ for line in sysd_out.split("\n"):
         etime = str((int(ms)/1000)%60)
 
     if (service and etime):
-##        print(f'{service}: {etime}')            # DEBUG
         data_point['test_data'][service] = etime
 
 
 # Write JSON file
-with io.open('data.json', 'w', encoding='utf8') as outfile:
+with io.open('data_blame.json', 'w', encoding='utf8') as outfile:
     str_ = json.dumps(data_point,
                       indent=4, sort_keys=False,
                       separators=(',', ': '), ensure_ascii=False)
