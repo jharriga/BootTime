@@ -45,7 +45,7 @@ for line in cpuinfo_out.split("\n"):
 ##        print(model.strip())          # DEBUG
 # Check for value
 if not model:
-    tc_values.insert(2, 'NULL')
+    tc_values.insert(2, "")
 else:
     tc_values.insert(2, model.lstrip())
 
@@ -56,7 +56,7 @@ for line in cpuinfo_out.split("\n"):
 ##        print(numcores.strip())           # DEBUG
 # Check for value
 if not numcores:
-    tc_values.insert(3, 'NULL')
+    tc_values.insert(3, "")
 else:
     tc_values.insert(3, numcores.strip())
 
@@ -67,7 +67,7 @@ for line in cpuinfo_out.split("\n"):
 ##        print(maxmhz.strip())           # DEBUG
 # Check for value
 if not maxmhz:
-    tc_values.insert(4, 'NULL')
+    tc_values.insert(4, "")
 else:
     tc_values.insert(4, maxmhz.strip())
 
@@ -76,7 +76,7 @@ sysctl_out = subprocess.run(['systemctl', 'get-default'], stdout=subprocess.PIPE
 sysctl_out = sysctl_out.stdout.decode('utf-8')
 # Check for value
 if not sysctl_out:
-    tc_values.insert(5, 'NULL')
+    tc_values.insert(5, "")
 else:
     tc_values.insert(5, sysctl_out.strip())
 
@@ -89,7 +89,7 @@ sysd_out = sysd_out.stdout.decode('utf-8')
 for i, str in enumerate(td_list):
     result = re.findall('(\d+\.\d+)s\s\('+str+'\)', sysd_out)
     if not result:
-        td_values.insert(i, 'NULL')
+        td_values.insert(i, "")
     else:
 ##        print(f'{str}: {result[0]}')               # DEBUG
         td_values.insert(i, result[0])
