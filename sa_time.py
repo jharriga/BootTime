@@ -112,7 +112,7 @@ data_point = {
         }
 
 # Write JSON file
-with io.open('data.json', 'w', encoding='utf8') as outfile:
+with io.open('data_time.json', 'w', encoding='utf8') as outfile:
     str_ = json.dumps(data_point,
                       indent=4, sort_keys=False,
                       separators=(',', ': '), ensure_ascii=False)
