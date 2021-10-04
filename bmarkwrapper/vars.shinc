@@ -1,0 +1,11 @@
+# Variables used within "BootTime/bmarkwrapper" scripts
+#
+# location of benchmark-wrapper on systems under test
+sut_bwrapper="/home/benchmark-wrapper"
+
+# Systems Under Test information : name and IP address
+sut_names=( rpi4CS8 agxRHEL84 agxL4T )
+sut_ipaddr=( 192.168.0.111 192.168.0.109 192.168.0.102 )
+
+# Elasticsearch URL:port
+es_url="http://marquez.perf.lab.eng.rdu2.redhat.com:9200"
