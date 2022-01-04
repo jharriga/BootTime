@@ -1,0 +1,44 @@
+[root@acer BootCode]# python3 testrun.py 
+***NEXT SUT: 192.168.0.108***
+testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+*Phase 1 - gather facts
+COMMAND: uname -r
+5.14.0-19.rt21.19.test.el9s.aarch64
+COMMAND: cat /etc/os-release | grep PRETTY_NAME
+PRETTY_NAME="CentOS Stream 9"
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+rebootsut: SUT 192.168.0.108 has rebooted
+testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+*Phase 4 - instrument reboot stats
+COMMAND: systemd-analyze time
+Startup finished in 1.281s (kernel) + 7.128s (initrd) + 41.840s (userspace) = 50.250s 
+graphical.target reached after 41.637s in userspace
+COMMAND: systemd-analyze blame | head -n 5
+32.775s plymouth-quit-wait.service
+ 6.764s NetworkManager-wait-online.service
+ 3.057s firewalld.service
+ 2.453s initrd-switch-root.service
+ 2.214s systemd-random-seed.service
+***NEXT SUT: 192.168.0.111***
+testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+*Phase 1 - gather facts
+COMMAND: uname -r
+5.4.60-v8.1.el8
+COMMAND: cat /etc/os-release | grep PRETTY_NAME
+PRETTY_NAME="CentOS Stream 8"
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+rebootsut: SUT 192.168.0.111 has rebooted
+testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+*Phase 4 - instrument reboot stats
+COMMAND: systemd-analyze time
+Startup finished in 2.000s (kernel) + 1min 15.185s (userspace) = 1min 17.185s
+multi-user.target reached after 1min 15.108s in userspace
+COMMAND: systemd-analyze blame | head -n 5
+      1min 181ms NetworkManager-wait-online.service
+         20.045s dnf-makecache.service
+          6.443s sssd.service
+          5.157s pmlogger.service
+          4.716s tuned.service
++++TESTING COMPLETED+++
