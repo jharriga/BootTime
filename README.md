@@ -1,6 +1,6 @@
 # BootTime
 Collection of scripts useful to investigate linux boot-time 
-* testrun.py: prototype for reboot testing (see: TESTRUN.log)
+* testrun.py: prototype for reboot testing (sample output: TESTRUN.log)
 * driver.sh: first version (bash) for automation (OBSOLETE)
 
 Utils/
