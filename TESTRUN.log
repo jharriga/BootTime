@@ -1,0 +1,80 @@
+[root@acer BootCode]# cat TESTRUN.log 
+
+***NEXT SUT: 192.168.0.108  testrpi4***
+testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+*Phase 1 - gather facts
+COMMAND: uname -r
+5.14.0-19.rt21.19.test.el9s.aarch64
+COMMAND: cat /etc/os-release | grep PRETTY_NAME | awk -F '=' '{gsub(/"/, "", $2); print $2}'
+CentOS Stream 9
+COMMAND: lscpu | grep -m1 'Model name:' | awk -F ':' '{gsub(/^[ \t]+/, "", $2); print $2}'
+Cortex-A72
+COMMAND: lscpu | grep -m1 'CPU(s):' | awk -F ':' '{gsub(/^[ \t]+/, "", $2); print $2}'
+4
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+rebootsut: SUT 192.168.0.108 has rebooted
+testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+*Phase 4 - instrument reboot stats
+COMMAND: systemd-analyze time
+Startup finished in 1.452s (kernel) + 4.636s (initrd) + 42.091s (userspace) = 48.180s 
+graphical.target reached after 41.959s in userspace
+COMMAND: systemd-analyze blame | head -n 5 | awk '{gsub(/^[ \t]+/, "", $0); print $0}'
+32.902s plymouth-quit-wait.service
+6.802s NetworkManager-wait-online.service
+3.505s firewalld.service
+2.620s udisks2.service
+2.504s accounts-daemon.service
+
+***NEXT SUT: 192.168.0.111  rpi4***
+testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+*Phase 1 - gather facts
+COMMAND: uname -r
+5.4.60-v8.1.el8
+COMMAND: cat /etc/os-release | grep PRETTY_NAME | awk -F '=' '{gsub(/"/, "", $2); print $2}'
+CentOS Stream 8
+COMMAND: lscpu | grep -m1 'Model name:' | awk -F ':' '{gsub(/^[ \t]+/, "", $2); print $2}'
+Cortex-A72
+COMMAND: lscpu | grep -m1 'CPU(s):' | awk -F ':' '{gsub(/^[ \t]+/, "", $2); print $2}'
+4
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+rebootsut: SUT 192.168.0.111 has rebooted
+testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+*Phase 4 - instrument reboot stats
+COMMAND: systemd-analyze time
+Startup finished in 1.968s (kernel) + 28.740s (userspace) = 30.708s
+multi-user.target reached after 28.678s in userspace
+COMMAND: systemd-analyze blame | head -n 5 | awk '{gsub(/^[ \t]+/, "", $0); print $0}'
+8.755s NetworkManager-wait-online.service
+8.272s pmlogger.service
+6.504s pmcd.service
+4.524s sssd.service
+4.095s dnf-makecache.service
+
+***NEXT SUT: 192.168.0.120  johnagx***
+testssh: verifying SSH to 192.168.0.120. Timeout: 20s
+*Phase 1 - gather facts
+COMMAND: uname -r
+4.9.253-tegra
+COMMAND: cat /etc/os-release | grep PRETTY_NAME | awk -F '=' '{gsub(/"/, "", $2); print $2}'
+Ubuntu 18.04.5 LTS
+COMMAND: lscpu | grep -m1 'Model name:' | awk -F ':' '{gsub(/^[ \t]+/, "", $2); print $2}'
+ARMv8 Processor rev 0 (v8l)
+COMMAND: lscpu | grep -m1 'CPU(s):' | awk -F ':' '{gsub(/^[ \t]+/, "", $2); print $2}'
+8
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+rebootsut: SUT 192.168.0.120 has rebooted
+testssh: verifying SSH to 192.168.0.120. Timeout: 20s
+*Phase 4 - instrument reboot stats
+COMMAND: systemd-analyze time
+Startup finished in 5.569s (kernel) + 4.685s (userspace) = 10.254s
+graphical.target reached after 4.659s in userspace
+COMMAND: systemd-analyze blame | head -n 5 | awk '{gsub(/^[ \t]+/, "", $0); print $0}'
+1.967s docker.service
+1.814s alsa-restore.service
+1.631s dev-mmcblk0p1.device
+1.228s udisks2.service
+971ms apt-daily-upgrade.service
++++TESTING COMPLETED+++
