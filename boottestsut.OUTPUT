@@ -1,0 +1,93 @@
+[root@acer BootCode]# time python3 sut_boottest.py 
+
+***NEXT SUT: 192.168.0.108  testrpi4***
+testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+testssh: SUT ssh active in 0.31 seconds
+*Phase 1 - gather facts
+5.14.0-19.rt21.19.test.el9s.aarch64
+CentOS Stream 9
+Cortex-A72
+4
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+testssh: verifying SSH to 192.168.0.108. Timeout: 300s
+testssh: SUT ssh active in 121.96 seconds
+rebootsut: SUT 192.168.0.108,  waiting 300s for reboot to complete...
+rebootsut: SUT shutdown and reboot required 153.87 seconds
+rebootsut: * state-change timers:
+  > SSH active: 122.39s
+  > SYSTEMCTL complete: 26.47s
+  > TOTAL reboot elapsed time: 148.86s
+testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+testssh: SUT ssh active in 0.31 seconds
+*Phase 4 - instrument reboot stats
+Startup finished in 2.797s (kernel) + 5.765s (initrd) + 40.968s (userspace) = 49.532s 
+graphical.target reached after 40.941s in userspace
+32.828s plymouth-quit-wait.service
+6.748s NetworkManager-wait-online.service
+3.544s firewalld.service
+2.703s udisks2.service
+2.608s accounts-daemon.service
+
+***NEXT SUT: 192.168.0.111  rpi4***
+testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+testssh: SUT ssh active in 0.35 seconds
+*Phase 1 - gather facts
+5.4.60-v8.1.el8
+CentOS Stream 8
+Cortex-A72
+4
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+testssh: verifying SSH to 192.168.0.111. Timeout: 300s
+testssh: SUT ssh active in 33.24 seconds
+rebootsut: SUT 192.168.0.111,  waiting 300s for reboot to complete...
+rebootsut: SUT shutdown and reboot required 44.55 seconds
+rebootsut: * state-change timers:
+  > SSH active: 33.69s
+  > SYSTEMCTL complete: 5.86s
+  > TOTAL reboot elapsed time: 39.55s
+testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+testssh: SUT ssh active in 0.38 seconds
+*Phase 4 - instrument reboot stats
+Startup finished in 1.971s (kernel) + 27.317s (userspace) = 29.289s
+multi-user.target reached after 27.252s in userspace
+8.926s pmlogger.service
+7.634s NetworkManager-wait-online.service
+5.960s sssd.service
+5.432s pmcd.service
+4.469s tuned.service
+
+***NEXT SUT: 192.168.0.120  johnagx***
+testssh: verifying SSH to 192.168.0.120. Timeout: 20s
+testssh: SUT ssh active in 0.21 seconds
+*Phase 1 - gather facts
+4.9.253-tegra
+Ubuntu 18.04.5 LTS
+ARMv8 Processor rev 0 (v8l)
+8
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+testssh: verifying SSH to 192.168.0.120. Timeout: 300s
+testssh: SUT ssh active in 32.24 seconds
+rebootsut: SUT 192.168.0.120,  waiting 300s for reboot to complete...
+rebootsut: SUT shutdown and reboot required 37.65 seconds
+rebootsut: * state-change timers:
+  > SSH active: 32.45s
+  > SYSTEMCTL complete: 0.19s
+  > TOTAL reboot elapsed time: 32.65s
+testssh: verifying SSH to 192.168.0.120. Timeout: 20s
+testssh: SUT ssh active in 0.17 seconds
+*Phase 4 - instrument reboot stats
+Startup finished in 5.538s (kernel) + 4.526s (userspace) = 10.065s
+graphical.target reached after 4.480s in userspace
+1.946s docker.service
+1.475s dev-mmcblk0p1.device
+1.418s udisks2.service
+842ms NetworkManager.service
+800ms nv-l4t-usb-device-mode.service
++++TESTING COMPLETED+++
+
+real	4m12.306s
+user	0m0.337s
+sys	0m0.082s
