@@ -1,6 +1,7 @@
 # BootTime
 Collection of scripts useful to investigate linux boot-time 
 * testrun.py: prototype for reboot testing (sample output: TESTRUN.log)
+* sut_boottest.py : latest prototype (sample output: SUT_BOOTTEST.log)
 
 Utils/
 * reboot_test.py: instruments reboot of remote system under test
