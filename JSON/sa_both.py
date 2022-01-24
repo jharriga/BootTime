@@ -19,14 +19,17 @@ import distro
 # testrun_dict = {
 #    ' date': curtime,
 #     'test_config': {
-#         cfg_dict{}
+#         testcfg_dict{}
 #     } 
-#     'test_data': {
+#     'test_results': {
 #         'satime':
 #             satime_dict{}
 #         'sablame':
 #             sablame_dict{}
 #     }
+#     'system_config': {
+#         syscfg_dict{}
+#     } 
 # }
 
 
@@ -60,7 +63,7 @@ def parse_satime(cmd_out, the_dict):
 
     for i, regex in enumerate(satime_list):
         result = re.findall('(\d+\.\d+)s\s\('+regex+'\)', cmd_out)
-        the_dict[regex] = verify_trim(result[0])
+        the_dict[regex] = float(verify_trim(result[0]))
 
     return the_dict
 
@@ -88,7 +91,7 @@ def parse_sablame(cmd_out, the_dict):
 
             if (service and total_sec):
                 cntr += 1
-                the_dict[service] = str(total_sec)
+                the_dict[service] = float(total_sec)
         else:
             break
 
@@ -109,7 +112,8 @@ def verify_trim(value):
 def main():
     # Dictionaries
     testrun_dict = {}          # complete run results (final dict)
-    cfg_dict = {}              # test configuration
+    testcfg_dict = {}          # test configuration
+    syscfg_dict = {}           # test configuration
     data_dict = {}             # test data/results (nested)
     satime_dict = {}           # systemd-analyze time results
     sablame_dict = {}          # systemd-analyze blame results
@@ -121,28 +125,33 @@ def main():
     testrun_dict['curtime'] = str(curtime.strip())
 
     ##########################
-    # Get test_config values
+    # Get 'test_config' values
+    #
+    # systemctl target
+    sysctl_out = subprocess.run(['systemctl', 'get-default'],
+        stdout=subprocess.PIPE)
+    testcfg_dict['target'] =\
+        str(verify_trim(sysctl_out.stdout.decode('utf-8')))
+
+    # testcfg_dict{} populated, insert it into testrun_dict{}
+    testrun_dict["test_config"] = testcfg_dict
+
+    ##########################
+    # Get 'system_config' values
     #
     # kernel version
     kversion_out = subprocess.run(['uname', '-r'], stdout=subprocess.PIPE)
-    cfg_dict['kernel'] = str(verify_trim(kversion_out.stdout.decode('utf-8')))
+    syscfg_dict['kernel'] =\
+        str(verify_trim(kversion_out.stdout.decode('utf-8')))
 
     # Linux Distro
-    cfg_dict['distro'] = str(verify_trim(distro.name(pretty=True)))
+    syscfg_dict['distro'] = str(verify_trim(distro.name(pretty=True)))
 
     # cpu test config values
     lscpu_out = subprocess.run(['lscpu'], stdout=subprocess.PIPE)
     lscpu_out = lscpu_out.stdout.decode('utf-8')
     # Parse results from 'lscpu' command
-    cfg_dict = parse_lscpu(lscpu_out, cfg_dict)
-
-    # systemctl target
-    sysctl_out = subprocess.run(['systemctl', 'get-default'],
-        stdout=subprocess.PIPE)
-    cfg_dict['target'] = str(verify_trim(sysctl_out.stdout.decode('utf-8')))
-
-    # cfg_dict{} populated, insert it into testrun_dict{}
-    testrun_dict["test_config"] = cfg_dict
+    syscfg_dict = parse_lscpu(lscpu_out, syscfg_dict)
 
     ##########################
     # Execute CMDS and populate per-command dictionaries:
@@ -168,13 +177,13 @@ def main():
     data_dict['sa_time'] = satime_dict
     data_dict['sa_blame'] = sablame_dict
 
-    ##print(satime_dict)      # DEBUG
-    ##print(sablame_dict)     # DEBUG
-
     # Insert data_dict{} into testrun_dict (final dictionary)
-    testrun_dict['test_data'] = data_dict
-    print("**TESTRUN DICT**")
-    print(testrun_dict)
+    testrun_dict['test_results'] = data_dict
+
+    # Insert syscfg_dict{} into testrun_dict{}
+    testrun_dict["system_config"] = syscfg_dict
+    print("**TESTRUN DICT**")        # DEBUG
+    print(testrun_dict)              # DEBUG
 
     # Write JSON file
     with io.open('testrun.json', 'w', encoding='utf8') as outfile:
@@ -189,5 +198,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
