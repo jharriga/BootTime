@@ -2,6 +2,8 @@
 Collection of scripts useful to investigate linux boot-time 
 * testrun.py: prototype for reboot testing (sample output: TESTRUN.log)
 * sut_boottest.py : latest prototype (sample output: SUT_BOOTTEST.log)
+* > Reboots remote systems (SUTs) and captures boot timing results
+* > Writes JSON file in format ready for ingest in ElasticSearch
 
 Utils/
 * reboot_test.py: instruments reboot of remote system under test
@@ -24,6 +26,7 @@ Utils/
       > TOTAL elapsed time 62s
 
 JSON/
+* sa_both.py : produces json from both 'time' and 'blame' results
 * sa_time.py : produces data.json from 'systemd-analyze time'
 * sa_blame : produces data.json from 'systemd-analyze blame'
 NOTE: requires 'pip3.6 import distro'
