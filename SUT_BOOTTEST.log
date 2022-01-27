@@ -1,93 +1,64 @@
-[root@acer BootCode]# time python3 sut_boottest.py 
+[root@acer BootCode]# python3 sut_boottest.py 
 
-***NEXT SUT: 192.168.0.108  testrpi4***
-testssh: verifying SSH to 192.168.0.108. Timeout: 20s
-testssh: SUT ssh active in 0.31 seconds
+***SUT: 192.168.0.108  testrpi4***
+> testssh: verifying SSH to 192.168.0.108. Timeout: 20s
 *Phase 1 - gather facts
-5.14.0-19.rt21.19.test.el9s.aarch64
-CentOS Stream 9
-Cortex-A72
-4
 *Phase 2 - configure SUT for reboot
 *Phase 3 - initiate reboot and wait for system readiness
-testssh: verifying SSH to 192.168.0.108. Timeout: 300s
-testssh: SUT ssh active in 121.96 seconds
-rebootsut: SUT 192.168.0.108,  waiting 300s for reboot to complete...
-rebootsut: SUT shutdown and reboot required 153.87 seconds
-rebootsut: * state-change timers:
-  > SSH active: 122.39s
-  > SYSTEMCTL complete: 26.47s
-  > TOTAL reboot elapsed time: 148.86s
-testssh: verifying SSH to 192.168.0.108. Timeout: 20s
-testssh: SUT ssh active in 0.31 seconds
-*Phase 4 - instrument reboot stats
-Startup finished in 2.797s (kernel) + 5.765s (initrd) + 40.968s (userspace) = 49.532s 
-graphical.target reached after 40.941s in userspace
-32.828s plymouth-quit-wait.service
-6.748s NetworkManager-wait-online.service
-3.544s firewalld.service
-2.703s udisks2.service
-2.608s accounts-daemon.service
+> testssh: verifying SSH to 192.168.0.108. Timeout: 300s
+phase3: SUT 192.168.0.108,  waiting 300s for reboot to complete...
+phase3: SUT shutdown and reboot required 5.78 seconds
+> testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+*Phase 4 - record systemd-analyze reboot stats
+*Phase 5 - neptune timing stats (if available)
+> testrun_dict: {'curtime': '2022-01-27T14:37:47.311122Z', 'sample': 1, 'test_config': {'hostname': 'testrpi4', 'IPaddr': '192.168.0.108', 'reboot_timeout': '300', 'ssh_timeout': '20', 'boot_tgt': 'multi-user.target', 'blame_cnt': '5'}, 'test_results': {'reboot': {'reboot_et': 5.777933526998822, 'ssh_et': 0.5759255886077881, 'sysctl_et': 0.19671916961669922, 'total_et': 0.7726447582244873}, 'satime': {'kernel': 1.431, 'initrd': 4.541, 'userspace': 40.197}, 'sablame': {'plymouth-quit-wait.service': 32.162, 'NetworkManager-wait-online.service': 10.872, 'firewalld.service': 3.466, 'udisks2.service': 2.626, 'accounts-daemon.service': 2.547}, 'neptuneui': {'logging': 3.113634, 'D-Bus': 4.284311, 'first-frame': 7.01811}}, 'system_config': {'kernel': '5.14.0-19.rt21.19.test.el9s.aarch64', 'osrelease': 'CentOS Stream 9', 'architecture': 'aarch64', 'model': 'Cortex-A72', 'numcores': '4', 'bogomips': '108.00'}}
 
-***NEXT SUT: 192.168.0.111  rpi4***
-testssh: verifying SSH to 192.168.0.111. Timeout: 20s
-testssh: SUT ssh active in 0.35 seconds
-*Phase 1 - gather facts
-5.4.60-v8.1.el8
-CentOS Stream 8
-Cortex-A72
-4
-*Phase 2 - configure SUT for reboot
-*Phase 3 - initiate reboot and wait for system readiness
-testssh: verifying SSH to 192.168.0.111. Timeout: 300s
-testssh: SUT ssh active in 33.24 seconds
-rebootsut: SUT 192.168.0.111,  waiting 300s for reboot to complete...
-rebootsut: SUT shutdown and reboot required 44.55 seconds
-rebootsut: * state-change timers:
-  > SSH active: 33.69s
-  > SYSTEMCTL complete: 5.86s
-  > TOTAL reboot elapsed time: 39.55s
-testssh: verifying SSH to 192.168.0.111. Timeout: 20s
-testssh: SUT ssh active in 0.38 seconds
-*Phase 4 - instrument reboot stats
-Startup finished in 1.971s (kernel) + 27.317s (userspace) = 29.289s
-multi-user.target reached after 27.252s in userspace
-8.926s pmlogger.service
-7.634s NetworkManager-wait-online.service
-5.960s sssd.service
-5.432s pmcd.service
-4.469s tuned.service
-
-***NEXT SUT: 192.168.0.120  johnagx***
-testssh: verifying SSH to 192.168.0.120. Timeout: 20s
-testssh: SUT ssh active in 0.21 seconds
-*Phase 1 - gather facts
-4.9.253-tegra
-Ubuntu 18.04.5 LTS
-ARMv8 Processor rev 0 (v8l)
-8
-*Phase 2 - configure SUT for reboot
-*Phase 3 - initiate reboot and wait for system readiness
-testssh: verifying SSH to 192.168.0.120. Timeout: 300s
-testssh: SUT ssh active in 32.24 seconds
-rebootsut: SUT 192.168.0.120,  waiting 300s for reboot to complete...
-rebootsut: SUT shutdown and reboot required 37.65 seconds
-rebootsut: * state-change timers:
-  > SSH active: 32.45s
-  > SYSTEMCTL complete: 0.19s
-  > TOTAL reboot elapsed time: 32.65s
-testssh: verifying SSH to 192.168.0.120. Timeout: 20s
-testssh: SUT ssh active in 0.17 seconds
-*Phase 4 - instrument reboot stats
-Startup finished in 5.538s (kernel) + 4.526s (userspace) = 10.065s
-graphical.target reached after 4.480s in userspace
-1.946s docker.service
-1.475s dev-mmcblk0p1.device
-1.418s udisks2.service
-842ms NetworkManager.service
-800ms nv-l4t-usb-device-mode.service
+Wrote file: JSON_testrun.json
 +++TESTING COMPLETED+++
+[root@acer BootCode]# cat JSON_testrun.json 
+{
+    "curtime": "2022-01-27T14:37:47.311122Z",
+    "sample": 1,
+    "test_config": {
+        "hostname": "testrpi4",
+        "IPaddr": "192.168.0.108",
+        "reboot_timeout": "300",
+        "ssh_timeout": "20",
+        "boot_tgt": "multi-user.target",
+        "blame_cnt": "5"
+    },
+    "test_results": {
+        "reboot": {
+            "reboot_et": 5.777933526998822,
+            "ssh_et": 0.5759255886077881,
+            "sysctl_et": 0.19671916961669922,
+            "total_et": 0.7726447582244873
+        },
+        "satime": {
+            "kernel": 1.431,
+            "initrd": 4.541,
+            "userspace": 40.197
+        },
+        "sablame": {
+            "plymouth-quit-wait.service": 32.162,
+            "NetworkManager-wait-online.service": 10.872,
+            "firewalld.service": 3.466,
+            "udisks2.service": 2.626,
+            "accounts-daemon.service": 2.547
+        },
+        "neptuneui": {
+            "logging": 3.113634,
+            "D-Bus": 4.284311,
+            "first-frame": 7.01811
+        }
+    },
+    "system_config": {
+        "kernel": "5.14.0-19.rt21.19.test.el9s.aarch64",
+        "osrelease": "CentOS Stream 9",
+        "architecture": "aarch64",
+        "model": "Cortex-A72",
+        "numcores": "4",
+        "bogomips": "108.00"
+    }
+}
 
-real	4m12.306s
-user	0m0.337s
-sys	0m0.082s
