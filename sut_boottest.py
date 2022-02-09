@@ -20,19 +20,23 @@ sut_list = [
 ]
 
 #####################################
-# DICTIONARY Format
+# DICTIONARY Format - dicts initialized in main()
 #
 # testrun_dict = {
 #    ' date': curtime,
 #     'test_config': {
 #         testcfg_dict{}
-#     } 
+#     }, 
 #     'test_results': {
+#         'reboot':
+#             reboot_dict{}
 #         'sa_time':
-#             run_dict{}
+#             sa_dict{}
 #         'sa_blame':
-#             run_dict{}
-#     }
+#             sa_dict{}
+#         'neptuneui':
+#             neptuneui_dict{}
+#     },
 #     'system_config': {
 #         syscfg_dict{}
 #     } 
@@ -54,7 +58,7 @@ class TimerError(Exception):
     # use built-in class for error handling
     pass
 
-class Timer:  # Needs to be silenced
+class Timer: 
     def __init__(self, text="Elapsed time: {:0.2f} seconds", logger=print):
         self._start_time = None
         self.text = text
@@ -509,38 +513,38 @@ def main():
     blame_cnt = 5            # number of sablame services to record
 
     # Dictionaries
-    complete_dict = {}       # complete results (all SUTs)
-    testrun_dict = {}        # run results (per SUT)
-    testcfg_dict = {}        # test configuration
-    syscfg_dict = {}         # system configuration
-    data_dict = {}           # test data/results (nested)
+    final_dict = {}          # comprehensive results (all SUTs)
 
     # Add current date timestamp to dict{}
-    curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    testrun_dict['date'] = str(curtime.strip())
-    testrun_dict['test_type'] = 'boot-time'     # hardcoded
-    testrun_dict['sample'] = int(1)             # hardcoded
+##    curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+##    testrun_dict['date'] = str(curtime.strip())
+##    testrun_dict['test_type'] = 'boot-time'     # hardcoded
+##    testrun_dict['sample'] = int(1)             # hardcoded
 
     ##########################
     # OUTER LOOP - For each SUT
     for i, (sut_host, sut_ip, sut_usr, sut_pswd) in enumerate(sut_list):
         print(f'\n***SUT: {sut_ip}  {sut_host}***')
-        data_dict = {}        # empty test data/results (nested)
+        # Dictionaries
+        testrun_dict = {}        # complete testrun results (per SUT)
+        testcfg_dict = {}        # test configuration
+        syscfg_dict = {}         # system configuration
+        data_dict = {}           # testdata results (nested)
 
-##        # Add current date timestamp to dict{} for this SUT
-##        curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-##        testrun_dict['curtime'] = str(curtime.strip())
-##        testrun_dict['sample'] = int(1)           # hardcoded
+        # Verify connectivity to SUT
+        ping_ssh1 = testssh(sut_ip, sut_usr, sut_pswd, ssh_timeout)
+        if ping_ssh1 is False:
+            continue            # skip this SUT
+
+        # Add current date timestamp to dict{} for this SUT
+        curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        testrun_dict['curtime'] = str(curtime.strip())
+        testrun_dict['sample'] = int(1)           # hardcoded
 
         # Initialize testcfg dict{} for this SUT
         testcfg_dict = init_dict(
             sut_host, sut_ip, reboot_timeout, ssh_timeout, target, blame_cnt)
         testrun_dict["test_config"] = testcfg_dict
-
-        # Verify connectivity to SUT
-        ping_ssh1 = testssh(sut_ip, sut_usr, sut_pswd, ssh_timeout)
-        if ping_ssh1 is False:
-            continue           # skip this SUT
 
         ############
         # INNER LOOP
@@ -564,11 +568,11 @@ def main():
         # Verify connectivity to freshly rebooted SUT
         ping_ssh2 = testssh(sut_ip, sut_usr, sut_pswd, ssh_timeout)
         if ping_ssh2 is False:
-            continue           # reboot failed, skip this SUT
+            continue           # reboot failed, abort this SUT test
 
         #----------
         # Phase 4: instrument SUT reboot w/systemd-analyze commands
-        # NOTE: sa_dict is nested with sa_time and sa_blame keys
+        # NOTE: sa_dict is nested with "sa_time" and "sa_blame" keys
         print(f'*Phase 4 - record systemd-analyze reboot stats')
         sa_dict = phase4(sut_ip, sut_usr, sut_pswd, blame_cnt)
 
@@ -591,13 +595,13 @@ def main():
         # Insert syscfg_dict{} into testrun_dict{}
         testrun_dict["system_config"] = syscfg_dict
         
-        # Insert testrun_dict{} into complete_dict{}
-        complete_dict[sut_host] = testrun_dict
-        write_json(complete_dict, f"JSON_{sut_host}.json")  # DEBUG
+        # Insert (sut-named) test results into final_dict{}
+        final_dict[sut_host] = testrun_dict
+##        write_json(testrun_dict, f"JSON_{sut_host}.json")  # DEBUG
 
     print(f'+++TESTING COMPLETED+++')
-##    print(f"> complete_dict: {complete_dict}\n")        # DEBUG
-    write_json(complete_dict, "JSON_complete.json")     # DEBUG
+##    print(f"> FINAL_dict: {final_dict}\n")        # DEBUG
+    write_json(final_dict, "JSON_final.json")     # DEBUG
 
     # END MAIN
 
