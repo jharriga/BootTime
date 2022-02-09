@@ -7,27 +7,34 @@
 *Phase 3 - initiate reboot and wait for system readiness
 > testssh: verifying SSH to 192.168.0.108. Timeout: 300s
 phase3: SUT 192.168.0.108,  waiting 300s for reboot to complete...
-phase3: SUT shutdown and reboot required 5.74 seconds
+phase3: SUT shutdown and reboot required 5.76 seconds
 > testssh: verifying SSH to 192.168.0.108. Timeout: 20s
 *Phase 4 - record systemd-analyze reboot stats
 *Phase 5 - neptune timing stats (if available)
-Wrote file: JSON_testrpi4.json
 
 ***SUT: 192.168.0.111  rpi4***
 > testssh: verifying SSH to 192.168.0.111. Timeout: 20s
-testssh: Could not connect to 192.168.0.111. Timed out
+*Phase 1 - gather facts
+*Phase 2 - configure SUT for reboot
+*Phase 3 - initiate reboot and wait for system readiness
+> testssh: verifying SSH to 192.168.0.111. Timeout: 300s
+phase3: SUT 192.168.0.111,  waiting 300s for reboot to complete...
+phase3: SUT shutdown and reboot required 5.68 seconds
+> testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+*Phase 4 - record systemd-analyze reboot stats
+*Phase 5 - neptune timing stats (if available)
+neptune_stats: neptune-ui startup timing stats unavailable on SUT, skipping
 
 ***SUT: 192.168.0.120  johnagx***
 > testssh: verifying SSH to 192.168.0.120. Timeout: 20s
 testssh: Could not connect to 192.168.0.120. Timed out
 +++TESTING COMPLETED+++
-Wrote file: JSON_complete.json
-
-[root@acer BootCode]# cat JSON_complete.json 
+Wrote file: JSON_final.json
+ 
+[root@acer BootCode]# cat JSON_final.json 
 {
     "testrpi4": {
-        "date": "2022-02-09T09:45:16.837897Z",
-        "test_type": "boot-time",
+        "curtime": "2022-02-09T16:20:29.636991Z",
         "sample": 1,
         "test_config": {
             "hostname": "testrpi4",
@@ -39,10 +46,10 @@ Wrote file: JSON_complete.json
         },
         "test_results": {
             "reboot": {
-                "reboot_et": 5.743657072000019,
-                "ssh_et": 0.539299726486206,
-                "sysctl_et": 0.19904875755310059,
-                "total_et": 0.7383484840393066
+                "reboot_et": 5.7553947910018906,
+                "ssh_et": 0.5410821437835693,
+                "sysctl_et": 0.20901060104370117,
+                "total_et": 0.7500927448272705
             },
             "satime": {
                 "kernel": 1.451,
@@ -65,6 +72,47 @@ Wrote file: JSON_complete.json
         "system_config": {
             "kernel": "5.14.0-19.rt21.19.test.el9s.aarch64",
             "osrelease": "CentOS Stream 9",
+            "architecture": "aarch64",
+            "model": "Cortex-A72",
+            "numcores": "4",
+            "bogomips": "108.00"
+        }
+    },
+    "rpi4": {
+        "curtime": "2022-02-09T16:20:39.368548Z",
+        "sample": 1,
+        "test_config": {
+            "hostname": "rpi4",
+            "IPaddr": "192.168.0.111",
+            "reboot_timeout": "300",
+            "ssh_timeout": "20",
+            "boot_tgt": "multi-user.target",
+            "blame_cnt": "5"
+        },
+        "test_results": {
+            "reboot": {
+                "reboot_et": 5.675030237998726,
+                "ssh_et": 0.41689205169677734,
+                "sysctl_et": 0.25301504135131836,
+                "total_et": 0.6699070930480957
+            },
+            "satime": {
+                "kernel": 2.005,
+                "initrd": 0.0,
+                "userspace": 30.764
+            },
+            "sablame": {
+                "dnf-makecache.service": 72.019,
+                "NetworkManager-wait-online.service": 7.175,
+                "sssd.service": 5.615,
+                "tuned.service": 4.509,
+                "pmlogger.service": 4.454
+            },
+            "neptuneui": {}
+        },
+        "system_config": {
+            "kernel": "5.4.60-v8.1.el8",
+            "osrelease": "CentOS Stream 8",
             "architecture": "aarch64",
             "model": "Cortex-A72",
             "numcores": "4",
