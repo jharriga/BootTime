@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#
 # Reboots remote systems (SUTs) and captures boot timing results
 # Writes JSON file in format ready for ingest in ElasticSearch
 #
@@ -147,9 +146,14 @@ def parse_satime(cmd_out, the_dict):
     # 'systemd-analyze time' key metrics and key names
     satime_list = ["kernel", "initrd", "userspace"]
 
-    for i, regex in enumerate(satime_list):
-        result = re.findall('(\d+\.\d+)s\s\('+regex+'\)', cmd_out)
-        the_dict[regex] = float(verify_trim(result[0]))
+##    for i, regex in enumerate(satime_list):
+    for regex in satime_list:
+        matches = re.findall('(\d+\.\d+)s\s\('+regex+'\)', cmd_out)
+##        result = re.search('(\d+\.\d+)s\s\('+regex+'\)', cmd_out)
+        if matches:
+            the_dict[regex] = float(matches[0])
+        else:
+            the_dict[regex] = float(0.0)
 
     return the_dict
 
@@ -201,10 +205,11 @@ def parse_neptuneui(cmd_out, the_dict, km_list):
 
     return the_dict
 
-def verify_trim(value):     # enhance to handle str(), float(), int()
-    # Check for value
+def verify_trim(value):  # Extend to handle str(), float(), int()
+    # Verify value. Return value or None if invalid
     if not value:
-        ret_val = str("")
+##        ret_val = str("")
+        ret_val = None
     else:
         ret_val = str(value.strip())
 
@@ -480,18 +485,13 @@ def phase5(ip, usr, passwd):
         print("neptune_stats:"\
               " neptune-ui startup timing stats unavailable on SUT,"\
               " skipping")
-        return the_dict                # return original dict{}
+        return ph5_dict           # return empty dict{}
 
     # single string contains entire cmd result
     cmd_result = stdout.read().decode('utf8').rstrip('\n')
 
     # Parse neptune stats from cmd_out and populate dict
     ph5_dict = parse_neptuneui(cmd_result, ph5_dict, km_list) 
-
-##    print("Neptune Timing Stats:")
-##    print(timeneptune_dict)
-
-##    the_dict['neptune-ui'] = timeneptune_dict
 
     return ph5_dict
 
@@ -509,18 +509,17 @@ def main():
     blame_cnt = 5            # number of sablame services to record
 
     # Dictionaries
-    testrun_dict = {}        # complete run results (per SUT)
+    complete_dict = {}       # complete results (all SUTs)
+    testrun_dict = {}        # run results (per SUT)
     testcfg_dict = {}        # test configuration
     syscfg_dict = {}         # system configuration
-#    reboot_dict = {}         # phase3 data/results (nested in data_dict)
-#    sa_dict = {}             # phase4 data/results (nested in data_dict)
-#    neptuneui_dict = {}      # phase5 data/results (nested in data_dict)
     data_dict = {}           # test data/results (nested)
 
     # Add current date timestamp to dict{}
     curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    testrun_dict['curtime'] = str(curtime.strip())
-    testrun_dict['sample'] = int(1)           # hardcoded
+    testrun_dict['date'] = str(curtime.strip())
+    testrun_dict['test_type'] = 'boot-time'     # hardcoded
+    testrun_dict['sample'] = int(1)             # hardcoded
 
     ##########################
     # OUTER LOOP - For each SUT
@@ -589,14 +588,16 @@ def main():
         # Insert complete data_dict{} into testrun_dict (final dictionary)
         testrun_dict["test_results"] = data_dict
 
-        # Insert syscfg_dict{} into wload_dict{}
+        # Insert syscfg_dict{} into testrun_dict{}
         testrun_dict["system_config"] = syscfg_dict
         
-        print(f"> testrun_dict: {testrun_dict}\n")        # DEBUG
-        write_json(testrun_dict, "JSON_testrun.json")     # DEBUG
-        break                                             # DEBUG
+        # Insert testrun_dict{} into complete_dict{}
+        complete_dict[sut_host] = testrun_dict
+        write_json(complete_dict, f"JSON_{sut_host}.json")  # DEBUG
 
     print(f'+++TESTING COMPLETED+++')
+##    print(f"> complete_dict: {complete_dict}\n")        # DEBUG
+    write_json(complete_dict, "JSON_complete.json")     # DEBUG
 
     # END MAIN
 
