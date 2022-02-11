@@ -1,1 +1,1 @@
-Collection of scripts developed during evolutions of Boot-time automation
+Collection of scripts created during development of Boot-time automation
