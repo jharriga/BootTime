@@ -1,4 +1,4 @@
-[root@acer JSON]# python3 sa_both.py 
+[root@acer JSON]# python3 sa_json.py 
 **TESTRUN DICT**
 {'curtime': '2022-01-24T15:53:45.622595Z', 'test_config': {'target': 'graphical.target'}, 'test_results': {'sa_time': {'kernel': 1.057, 'initrd': 2.735, 'userspace': 49.002}, 'sa_blame': {'plymouth-quit-wait.service': 23.978, 'unbound-anchor.service': 18.206, 'udisks2.service': 11.523, 'vdo.service': 9.919, 'NetworkManager-wait-online.service': 9.085}}, 'system_config': {'kernel': '4.18.0-348.2.1.el8_5.x86_64', 'distro': 'CentOS Stream 8', 'model': 'Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz', 'numcores': '8', 'maxmhz': '4200.0000'}}
 Wrote file: testrun.json
