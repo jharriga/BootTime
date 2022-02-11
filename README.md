@@ -3,6 +3,7 @@ Collection of scripts useful to investigate linux boot-time
 * sut_boottest.py : latest JSON prototype (sample output: sut_boottest.OUTPUT)
 * > Reboots remote systems (SUTs) and captures boot timing results
 * > Writes JSON file in format ready for ingest in ElasticSearch
+* > See sample output: single.json and multiple.json
 * testrun.py: older text-based prototype for reboot testing (sample output: testrun.OUTPUT)
 
 Sandbox/
