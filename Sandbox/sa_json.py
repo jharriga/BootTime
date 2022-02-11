@@ -1,8 +1,8 @@
-# SA_BOTH.py
+# SA_JSON.py
 # test script to produce bmark-wrapper json input
 # Executes then parses into dictionary:
 #    'systemd-analyze time' & 'systemd-analyze blame'
-# USAGE: python3 sa_both.py
+# USAGE: python3 sa_json.py
 # Writes out new file 'testrun.json'
 
 import sys
