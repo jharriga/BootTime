@@ -23,21 +23,24 @@ sut_list = [
 # DICTIONARY Format - dicts initialized in main()
 #
 # testrun_dict = {
-#    ' date': curtime,
-#     'test_config': {
+#     "cluster_name": hostname,
+#     "date": curtime,
+#     "test_type": "boot-time",
+#     "sample": 1,
+#     "test_config": {
 #         testcfg_dict{}
 #     }, 
-#     'test_results': {
-#         'reboot':
+#     "test_results": {
+#         "reboot":
 #             reboot_dict{}
-#         'sa_time':
+#         "satime":
 #             sa_dict{}
-#         'sa_blame':
+#         "sablame":
 #             sa_dict{}
-#         'neptuneui':
+#         "neptuneui":
 #             neptuneui_dict{}
 #     },
-#     'system_config': {
+#     "system_config": {
 #         syscfg_dict{}
 #     } 
 # }
@@ -511,15 +514,11 @@ retry_int = 2                 # client.connect retry interval (in sec)
 
 def main():
     blame_cnt = 5            # number of sablame services to record
+    outfilename = str(
+        datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + ".json")
 
-    # Dictionaries
-    final_dict = {}          # comprehensive results (all SUTs)
-
-    # Add current date timestamp to dict{}
-##    curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-##    testrun_dict['date'] = str(curtime.strip())
-##    testrun_dict['test_type'] = 'boot-time'     # hardcoded
-##    testrun_dict['sample'] = int(1)             # hardcoded
+    # List of Dictionaries
+    results_list = []          # comprehensive results (all SUTs)
 
     ##########################
     # OUTER LOOP - For each SUT
@@ -536,10 +535,12 @@ def main():
         if ping_ssh1 is False:
             continue            # skip this SUT
 
-        # Add current date timestamp to dict{} for this SUT
+        # Add to dict{} for this SUT
+        testrun_dict["cluster_name"] = str(sut_host) 
         curtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-        testrun_dict['curtime'] = str(curtime.strip())
-        testrun_dict['sample'] = int(1)           # hardcoded
+        testrun_dict["date"] = str(curtime.strip())
+        testrun_dict["test_type"] = "boot-time"   # hardcoded
+        testrun_dict["sample"] = int(1)           # hardcoded
 
         # Initialize testcfg dict{} for this SUT
         testcfg_dict = init_dict(
@@ -595,13 +596,12 @@ def main():
         # Insert syscfg_dict{} into testrun_dict{}
         testrun_dict["system_config"] = syscfg_dict
         
-        # Insert (sut-named) test results into final_dict{}
-        final_dict[sut_host] = testrun_dict
-##        write_json(testrun_dict, f"JSON_{sut_host}.json")  # DEBUG
+        # Insert test results for this SUT into results_list[]
+        results_list.append(testrun_dict)
 
     print(f'+++TESTING COMPLETED+++')
-##    print(f"> FINAL_dict: {final_dict}\n")        # DEBUG
-    write_json(final_dict, "JSON_final.json")     # DEBUG
+
+    write_json(results_list, outfilename)
 
     # END MAIN
 
