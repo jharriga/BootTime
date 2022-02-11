@@ -341,7 +341,7 @@ def phase2(sship, sshuser, sshpasswd, boot_target):
 
 # Phase 3 - reboot and wait for system readiness
 def phase3(ip, usr, passwd):
-    ph3_dict = {}         # empty dict{} for us in this phase function
+    ph3_dict = {}         # empty dict{} for use in this phase function
     # Initiate SSH connection - ssh_timeout (GLOBAL)
     ssh_reboot = openclient(ip, usr, passwd, ssh_timeout)
 
