@@ -418,14 +418,17 @@ def phase3(ip, usr, passwd):
     # Stop timer and Populate reboot_dict{} with results
     reboot_et = et_reboot.stop()
     ph3_dict['reboot_et'] = float(reboot_et)
-
-##    print('rebootsut: * state-change timers:')
-##    print(f'  > SSH active: {ssh_et:0.2f}s')
-##    print(f'  > SYSTEMCTL complete: {sysctl_et:0.2f}s')
-##    print(f'  > TOTAL reboot elapsed time: {total_et:0.2f}s')
     ph3_dict['ssh_et'] = float(ssh_et)
     ph3_dict['sysctl_et'] = float(sysctl_et)
     ph3_dict['total_et'] = float(total_et)
+    
+    # Record boot target
+    cmd_bt = "systemctl get-default 2> \&1"
+    stdin, stdout, stderr = ssh_new.exec_command(cmd_bt, get_pty=True)
+    # Block on completion of exec_command
+    exit_status = stdout.channel.recv_exit_status()
+    cmdres_bt = stdout.read().decode('utf8').rstrip('\n')
+    ph3_dict['boot_tgt'] = str(verify_trim(cmdres_bt))
 
     ssh_new.close()
 
