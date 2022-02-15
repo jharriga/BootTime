@@ -442,7 +442,7 @@ def phase4(ip, usr, passwd, num_blames):
     ph4_dict = {}              # systemd-analyze complete results
     #                 KEY        COMMAND
     instr_list = [("sa_time",  "systemd-analyze time"),
-                  ("sa_blame", "systemd-analyze blame")
+                  ("sa_blame", "systemd-analyze blame --no-pager")
     ]
 
     # Initiate SSH connection - ssh_timeout (GLOBAL)
