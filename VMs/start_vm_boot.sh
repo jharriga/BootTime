@@ -8,7 +8,7 @@ TS=$(date +%s.%N)
 echo -n "$TS" > /tmp/vm_start_time
 
 # Start the VM
-# < Insert VM start cmdline HERE >
+echo "< Insert VM start cmdline HERE >"
 
 # VM has been powered off. Report start time and clean-up
 echo "start time: $TS"
