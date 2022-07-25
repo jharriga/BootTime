@@ -13,3 +13,7 @@ Collection of scripts created during development of Boot-time automation
 * rcv_exit_status.py: illustrates blocking with paramiko exec cmds
 * sa_json.py : produces json from both 'time' and 'blame' results
 NOTE: requires 'pip3.6 import distro'
+
+VMs/
+Two scripts which work together to report on boot-time stats for a VM
+* 
