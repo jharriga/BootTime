@@ -1,0 +1,11 @@
+root@vm:~# ./calc_boottimes.sh 
+Starting networking back to host
+-------
+devel@192.168.122.212's password: 
+start_time: 1658758294.286305321
+end_time: 1658758314.328646480
+dmesg_time: 12.576160
+-------
+TOTAL (power on to myapp) boot-time: 20.0423
+PreKernel boot-time: 7.46614
+root@vm:~# 
