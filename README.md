@@ -16,4 +16,6 @@ NOTE: requires 'pip3.6 import distro'
 
 VMs/
 Two scripts which work together to report on boot-time stats for a VM
-* 
+* start_vm_boot.sh: execute on HOST. You need to add cmdline to start your VM
+* print_boottime.sh: execute in VM. Prints boot-time metrics (see sample.txt)
+* sample.txt: example of output from 'print_boottime.sh'
