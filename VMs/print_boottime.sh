@@ -1,5 +1,5 @@
 #!/bin/bash
-# Must be run as ROOT on the SUT
+# Must be run as ROOT on the VM
 # Parses myapp timestamps and calculates 'myapp' startup service timings
 # DEPENDENCIES: grep, awk, echo, xargs
 #
@@ -10,6 +10,7 @@
 #    dmesg | grep -m 1 myapp | awk -F '-' '{print $2}'
 #      1657913795.963792736
 
+# Edit this as needed
 HOSTNAME="192.168.122.212"
 
 # Start networking, if not already running
