@@ -1,4 +1,4 @@
-root@vm:~# ./calc_boottimes.sh 
+root@vm:~# ./print_boottime.sh 
 Starting networking back to host
 -------
 devel@192.168.122.212's password: 
