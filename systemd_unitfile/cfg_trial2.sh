@@ -1,7 +1,7 @@
 #!/bin/bash
 # TRIAL2
 
-UNITFILE=/etc/systemd/systemd/myapp.service
+UNITFILE=/etc/systemd/system/myapp.service
 
 if [ -f "$UNITFILE" ]; then
     echo "Unit file already exists. Exiting"
