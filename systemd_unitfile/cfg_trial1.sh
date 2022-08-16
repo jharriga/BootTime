@@ -5,7 +5,7 @@ UNITFILE=/etc/systemd/system/myapp.service
 
 if [ -f "$UNITFILE" ]; then
     echo "Unit file already exists. Exiting"
-    echo "Please remove $UNITFILE"
+    echo "Please remove ${UNITFILE} and ${UNITFILE}.d/"
     exit 1
 fi
 
