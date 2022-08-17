@@ -17,7 +17,7 @@ curr_ts=$(date "+%Y.%m.%d-%H.%M.%S")
 DMESG="${label}.dmesg"
 TIME="${label}.satime"
 DOT="${label}.sadot"
-PLOT="${label}.saplot"
+PLOT="${label}-saplot.svg"
 ALLRESULTS="$DMESG $TIME $DOT $PLOT"
 TARBALL="${label}.${curr_ts}.tar"
 
