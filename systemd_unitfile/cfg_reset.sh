@@ -24,4 +24,6 @@ systemctl daemon-reload
 systemctl cat myapp.service
 echo "Previous cmd should have returned: No files found for myapp.service"
 
+echo "now manually reboot SUT, then run tar_results.sh"
+
 exit 0
