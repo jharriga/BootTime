@@ -15,9 +15,9 @@ curr_ts=$(date "+%Y.%m.%d-%H.%M.%S")
 
 # Create list of results filenames
 DMESG="${label}.dmesg"
-TIME="${label}.time"
-DOT="${label}.dot"
-PLOT="${label}.plot"
+TIME="${label}.satime"
+DOT="${label}.sadot"
+PLOT="${label}.saplot"
 ALLRESULTS="$DMESG $TIME $DOT $PLOT"
 TARBALL="${label}.${curr_ts}.tar"
 
