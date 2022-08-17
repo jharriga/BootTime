@@ -22,6 +22,6 @@ fi
 # Verify
 systemctl daemon-reload
 systemctl cat myapp.service
-echo "Previous cmd should have returned Not Found"
+echo "Previous cmd should have returned: No files found for myapp.service"
 
 exit 0
