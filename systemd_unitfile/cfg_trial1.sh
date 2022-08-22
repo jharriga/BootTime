@@ -11,7 +11,8 @@ if [ -f "$MYAPP" ]; then
 fi
 
 # Create MYAPP executable
-cat <<EOF1 > "$MYAPP"
+# NOTE: specify 'EOF1' to suppress param substitution
+cat <<'EOF1' > "$MYAPP"
 #!/bin/sh
 
 echo "myapp -  $(date +%s.%N)" | tee /dev/kmsg /dev/console
