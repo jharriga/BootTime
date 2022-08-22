@@ -44,6 +44,28 @@ ExecStart=/bin/myapp
 WantedBy=application.target
 EOF2
 
+###---
+TGTFILE=/etc/systemd/system/application.target
+
+if [ -f "$TGTFILE" ]; then
+    echo "Target file already exists. Exiting"
+    echo "Please run cfg_reset.sh"
+    exit 1
+fi
+
+# Create targetfile
+cat <<EOF3 > "$TGTFILE"
+[Unit]
+Description=Main Application Suite
+[Install]
+WantedBy=default.target
+EOF3
+
+###----
+# Enable
+systemctl enable myapp
+systemctl enable application.target
+
 # Verify
 ls -l /bin/myapp
 systemctl daemon-reload
