@@ -11,7 +11,7 @@ if [ -f "$UNITFILE" ] || [ -d "$UNITDIR" ]; then
         read -p "Remove (y/n): " response
 	case $response in
 	    [Yy]* ) rm -f $UNITFILE; rm -rf $UNITDIR; rm -f $MYAPP; break;;
-	    [Nn]* ) echo "exiting"; exit;;
+	    [Nn]* ) echo "exiting without changes"; exit;;
 	    * ) echo "Please answer yes or no";;
         esac
     done
