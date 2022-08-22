@@ -17,6 +17,8 @@ cat <<EOF1 > "$MYAPP"
 echo "myapp -  $(date +%s.%N)" | tee /dev/kmsg /dev/console
 EOF1
 
+chmod 755 /bin/myapp
+
 ###---
 UNITFILE=/etc/systemd/system/myapp.service
 
