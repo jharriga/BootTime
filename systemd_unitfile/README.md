@@ -21,4 +21,4 @@ Run trial2 -  adds ‘/bin/myapp’ and ‘myapp’ unit file with ‘DefaultDep
 * sut# ./cfg_reset.sh
 
 Then copy the three tarballs back to your system and analyze results
-$ scp root@<sut-ip>:/home/BootTime/systemd_unitfile/*.tar .
+* $ scp root@<sut-ip>:/home/BootTime/systemd_unitfile/*.tar .
