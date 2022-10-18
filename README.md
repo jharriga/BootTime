@@ -6,7 +6,7 @@ Collection of scripts useful to investigate linux boot-time
 * > See sample output: single.json and multiple.json
 
 systemd_unitfile/
-Assist with measuriment of custom systemd-unitfile timings
+Assists with measurement of custom systemd-unitfile timings
 * see README.md in directory
 
 Sandbox/
