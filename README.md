@@ -4,7 +4,10 @@ Collection of scripts useful to investigate linux boot-time
 * > Reboots remote systems (SUTs) and captures boot timing results
 * > Writes JSON file in format ready for ingest in ElasticSearch
 * > See sample output: single.json and multiple.json
-* testrun.py: older text-based prototype for reboot testing (sample output: testrun.OUTPUT)
+
+systemd_unitfile/
+Assist with measuriment of custom systemd-unitfile timings
+* see README.md in directory
 
 Sandbox/
 Collection of scripts created during development of Boot-time automation
