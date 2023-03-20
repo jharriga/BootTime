@@ -14,13 +14,21 @@ fi
 curr_ts=$(date "+%Y.%m.%d-%H.%M.%S")
 
 # Create list of results filenames
+UNAME="${label}.uname
+OSRELEASE="${label}.osrelease"
+CONFIG="${label}.config"
 DMESG="${label}.dmesg"
 TIME="${label}.satime"
 BLAME="${label}.blame"
 DOT="${label}.sadot"
 PLOT="${label}-saplot.svg"
-ALLRESULTS="$DMESG $TIME $BLAME $DOT $PLOT"
+ALLRESULTS="$UNAME $OSRELEASE $CONFIG $DMESG $TIME $BLAME $DOT $PLOT"
 TARBALL="${label}.${curr_ts}.tar"
+
+# Record results: UNAME; OSRELEASE; CONFIG
+uname -r > "$UNAME"
+cat /etc/os-release > "$OSRELEASE"
+cat /boot/config-$(uname -r) > "$CONFIG"
 
 # Record 'dmesg' results
 dmesg | grep -m1 -i "myapp" > "$DMESG"
