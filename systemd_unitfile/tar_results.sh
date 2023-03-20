@@ -14,7 +14,7 @@ fi
 curr_ts=$(date "+%Y.%m.%d-%H.%M.%S")
 
 # Create list of results filenames
-UNAME="${label}.uname
+UNAME="${label}.uname"
 OSRELEASE="${label}.osrelease"
 CONFIG="${label}.config"
 DMESG="${label}.dmesg"
