@@ -16,9 +16,10 @@ curr_ts=$(date "+%Y.%m.%d-%H.%M.%S")
 # Create list of results filenames
 DMESG="${label}.dmesg"
 TIME="${label}.satime"
+BLAME="${label}.blame"
 DOT="${label}.sadot"
 PLOT="${label}-saplot.svg"
-ALLRESULTS="$DMESG $TIME $DOT $PLOT"
+ALLRESULTS="$DMESG $TIME $BLAME $DOT $PLOT"
 TARBALL="${label}.${curr_ts}.tar"
 
 # Record 'dmesg' results
@@ -30,6 +31,10 @@ systemd-analyze time > "$TIME"
 # Create ‘systemd-analyze dot’ graph
 echo "producing DOT"
 systemd-analyze dot myapp.service > "$DOT"
+
+# Create 'blame' results
+echo "producing BLAME"
+systemd-analyze blame > "$BLAME"
 
 # Create ‘systemd-analyze plot’ results
 echo "producing PLOT"
