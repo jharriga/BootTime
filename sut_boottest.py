@@ -444,8 +444,7 @@ def phase3(ip, usr, passwd):
     #[   15.744369] atlantic 0002:81:00.0 eth0: atlantic: link change...
     #[   15.746078] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
     # dmesg | grep -m 1 eth0 | cut -d "[" -f2 | cut -d "]" -f1
-    cmd_linkup = "dmesg | grep -m 1 eth0 | cut -d '[' -f2 | cut -d ']' -f1"
-    ##cmd_linkup = "systemctl get-default 2> \&1"
+    cmd_linkup = "dmesg | grep -m 1 {} | cut -d '[' -f2 | cut -d ']' -f1".format(net_str)
     stdin, stdout, stderr = ssh_new.exec_command(cmd_linkup, get_pty=True)
     # Block on completion of exec_command
     exit_status = stdout.channel.recv_exit_status()
