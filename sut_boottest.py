@@ -19,9 +19,10 @@ sut_list = [
     ("soc1ER2-run3", "10.16.2.167", "root", "password"),
 ]
 # Set this to your systems network-link-is-up string in DMESG
-#net_str = "link is up"        # RHIVOS ER1 on RPI4
-#net_str = "link is ready"     # RHIVOS ER1.2 on RPI4
-net_str = "eth0"             # RHIVOS ER2 on QDrive3
+#net_str = "link is up"          # RHIVOS ER1 on RPI4
+#net_str = "link is ready"       # RHIVOS ER1.2 on RPI4
+#net_str = "link becomes ready"  # RHIVOS ER1.2 on QDrive3
+net_str = "eth0"                # RHIVOS ER2 on QDrive3
 
 #####################################
 # DICTIONARY Format - dicts initialized in main()
