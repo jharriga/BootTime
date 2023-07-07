@@ -6,6 +6,9 @@ sut_boottest.py : latest JSON prototype (sut_boottestREADME.pdf: documents autom
 * Writes JSON file in format ready for ingest in ElasticSearch
 * See sample output: sut_boottest.OUTPUT
 
+calc_satimes.py : post processes sut_boottest.py JSON file
+* calculates run-to-run variance stats for systemd-analyze by parsing 'sa_time' JSON object
+
 systemd_unitfile/
 Assists with measurement of custom systemd-unitfile timings
 * see README.md in directory
