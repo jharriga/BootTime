@@ -553,13 +553,12 @@ def main():
     outfilename = str({sut_host} +
         datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + ".json")
 
-    # List of Dictionaries
-    results_list = []          # comprehensive results (all SUTs)
-
     ##########################
     # OUTER LOOP - For each SUT
     for i, (sut_host, sut_ip, sut_usr, sut_pswd) in enumerate(sut_list):
+        # initialize vars and print msg for this SUT being tested
         print(f'\n***SUT: {sut_ip}  {sut_host}  Number of Runs: {run_count}***')
+        results_list = []          # comprehensive results - list of dicts
         outfilename = str(sut_host + "_" +\
                       datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') +\
                       ".json")
