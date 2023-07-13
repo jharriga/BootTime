@@ -381,7 +381,7 @@ def phase3(ip, usr, passwd):
     et_reboot.start()
 
     # Need to stall/pause while shutdown completes
-    delay = 5           # just a guess, pause for reboot to complete
+    delay = 60           # just a guess, pause for reboot to complete
     time.sleep(delay)   # just a guess...
 
     # Start ssh timer
