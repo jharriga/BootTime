@@ -550,8 +550,6 @@ retry_int = 2                 # client.connect retry interval (in sec)
 
 def main():
     blame_cnt = 10            # number of sablame services to record
-    outfilename = str({sut_host} +
-        datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + ".json")
 
     ##########################
     # OUTER LOOP - For each SUT
