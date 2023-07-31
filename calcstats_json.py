@@ -3,7 +3,10 @@
 # post processes sut_boottest.py JSON file
 # calculates variance statistics for systemd-analyze by 
 # parsing 'sa_time' JSON object for startup section timings
-#  kernel, initrd, userspace, total
+#     kernel, initrd, userspace, total
+# Also parses 'sa_blame' JSON object for systemd services
+# Edit 'sblame_list' (line #148) to select which systemd
+#  services are searched for
 #-------------------------------------------------------------
 
 import json
@@ -127,8 +130,8 @@ def print_stats(data_dict, json_path, fname):
 dir = '.'
 
 for filename in os.listdir(dir):
-##    if fnmatch.fnmatch(filename, '*.json'):
-    if fnmatch.fnmatch(filename, 'ride4ER3*.json'):
+    if fnmatch.fnmatch(filename, '*.json'):
+##    if fnmatch.fnmatch(filename, 'ride4ER3*.json'):
         f = os.path.join(dir, filename)
         if os.path.isfile(f):
             # now open it, load JSON and print the stats
