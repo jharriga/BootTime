@@ -1,0 +1,104 @@
+[
+    {
+        "cluster_name": "system1",
+        "date": "2023-07-31T10:15:11.630038Z",
+        "test_type": "boot-time",
+        "sample": 1,
+        "test_config": {
+            "hostname": "system1",
+            "IPaddr": "10.19.243.222",
+            "reboot_timeout": "300",
+            "ssh_timeout": "20",
+            "boot_tgt": "multi-user.target",
+            "blame_cnt": "10"
+        },
+        "test_results": {
+            "reboot": {
+                "reboot_et": 60.91170637961477,
+                "ssh_et": 0.30470895767211914,
+                "sysctl_et": 0.5707521438598633,
+                "total_et": 0.8754611015319824,
+                "link_is_up": 13.557157,
+                "boot_tgt": "graphical.target"
+            },
+            "satime": {
+                "kernel": 0.727,
+                "initrd": 4.849,
+                "userspace": 11.533,
+                "total": 17.109
+            },
+            "sablame": {
+                "NetworkManager-wait-online.service": 4.785,
+                "initrd-cleanup.service": 1.647,
+                "initrd-switch-root.service": 1.547,
+                "auditd.service": 0.898,
+                "NetworkManager.service": 0.878,
+                "dbus-broker.service": 0.613,
+                "modprobe@drm.service": 0.578,
+                "kmod-static-nodes.service": 0.578,
+                "user@0.service": 0.522,
+                "systemd-logind.service": 0.49
+            },
+            "neptuneui": {}
+        },
+        "system_config": {
+            "kernel": "5.14.0-328.291.el9iv.aarch64",
+            "osrelease": "Red Hat Enterprise Linux 9.3 Beta (Plow)",
+            "architecture": "aarch64",
+            "model": "Cortex-A78C",
+            "numcores": "8",
+            "bogomips": "38.40"
+        }
+    },
+    {
+        "cluster_name": "system1",
+        "date": "2023-07-31T10:16:15.983249Z",
+        "test_type": "boot-time",
+        "sample": 2,
+        "test_config": {
+            "hostname": "system1",
+            "IPaddr": "10.19.243.222",
+            "reboot_timeout": "300",
+            "ssh_timeout": "20",
+            "boot_tgt": "multi-user.target",
+            "blame_cnt": "10"
+        },
+        "test_results": {
+            "reboot": {
+                "reboot_et": 60.92555710300803,
+                "ssh_et": 0.31762266159057617,
+                "sysctl_et": 0.5492534637451172,
+                "total_et": 0.8668761253356934,
+                "link_is_up": 13.307033,
+                "boot_tgt": "graphical.target"
+            },
+            "satime": {
+                "kernel": 0.759,
+                "initrd": 4.573,
+                "userspace": 11.737,
+                "total": 17.069000000000003
+            },
+            "sablame": {
+                "NetworkManager-wait-online.service": 4.945,
+                "initrd-switch-root.service": 1.513,
+                "initrd-cleanup.service": 1.328,
+                "NetworkManager.service": 0.978,
+                "auditd.service": 0.928,
+                "systemd-logind.service": 0.66,
+                "modprobe@drm.service": 0.598,
+                "kmod-static-nodes.service": 0.598,
+                "dbus-broker.service": 0.573,
+                "user@0.service": 0.51
+            },
+            "neptuneui": {}
+        },
+        "system_config": {
+            "kernel": "5.14.0-328.291.el9iv.aarch64",
+            "osrelease": "Red Hat Enterprise Linux 9.3 Beta (Plow)",
+            "architecture": "aarch64",
+            "model": "Cortex-A78C",
+            "numcores": "8",
+            "bogomips": "38.40"
+        }
+    }
+]
