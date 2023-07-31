@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #--------------------------------------------------------------
-# post processes sut_boottest.py JSON file
+# post processes sut_boottest.py JSON files
+# Opens all '.json' files in the current directory (line 134)
 # calculates variance statistics for systemd-analyze by 
 # parsing 'sa_time' JSON object for startup section timings
 #     kernel, initrd, userspace, total
