@@ -3,11 +3,14 @@ Collection of scripts useful to investigate linux boot-time
 
 sut_boottest.py : latest JSON prototype (sut_boottestREADME.pdf: documents automation flow)
 * Reboots remote systems (SUTs) and captures boot timing results
-* Writes JSON file in format ready for ingest in ElasticSearch
+* Writes JSON file in format ready for ingest in ElasticSearch, see 'example.json'
 * See sample output: sut_boottest.OUTPUT
 
-calc_satimes.py : post processes sut_boottest.py JSON file
-* calculates run-to-run variance stats for systemd-analyze by parsing 'sa_time' JSON object
+calcstats_json.py : post processes sut_boottest.py JSON file
+* calculates run-to-run variance stats for:
+* systemd-analyze by parsing 'sa_time' JSON object
+* systemd-analyze by parsing 'sa_blame' JSON object
+* DMESG 'link is up' message and timestamp
 
 systemd_unitfile/
 Assists with measurement of custom systemd-unitfile timings
