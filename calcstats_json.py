@@ -104,9 +104,9 @@ def print_stats(data_dict, json_path, fname):
         else:
             pass
 
-    # Check for empty list, if so skip it
+    # Check for a list with less than 2 values, if so skip it
     vl_length = len(value_list)
-    if vl_length:
+    if vl_length > 1:
         # Print MEAN, STDDEV and %SD aka co-efficient of variation
         mean = statistics.mean(value_list)
         std_dev = statistics.stdev(value_list)
