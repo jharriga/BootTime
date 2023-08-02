@@ -14,6 +14,7 @@ import json
 import statistics
 import os
 import fnmatch
+from collections import OrderedDict
 
 ###############################################################
 # FUNCTIONS Begin
@@ -123,6 +124,21 @@ def print_stats(data_dict, json_path, fname):
         print("> % s  " %(json_path[-1]) +\
               "% s Samples - SKIPPED" %(vl_length)) 
 
+
+# Function to get the list of keys across multiple runs
+def get_test_result_list(data, metric):
+    runs = [results['test_results'][metric] for results in data]
+    keys_list = []
+    for items in runs:
+        for item_key in items:
+            keys_list.append(item_key)
+
+    unique_keys = list(dict.fromkeys(keys_list))
+
+    return unique_keys
+
+
+
 # FUNCTIONS End
 ###############################################################
 
@@ -138,25 +154,19 @@ for filename in os.listdir(dir):
             # now open it, load JSON and print the stats
             with open(f, 'r') as file:
                 data = json.load(file)
+
                 print("## " + f)
                 print("systemd-analyze time:")
-                satime_list = ["kernel", "initrd", "userspace", "total"]
+                satime_list = get_test_result_list(data, "satime")
+
                 for key1 in satime_list:
                     print_stats(data,\
                       ["test_results", "satime", key1], filename)
 
+
                 print("systemd-analyze blame:")
-                sablame_list = ["NetworkManager-wait-online.service", \
-                        "initrd-switch-root.service", \
-                        "initrd-cleanup.service", \
-                        "NetworkManager.service", \
-                        "auditd.service", \
-                        "systemd-tmpfiles-setup.service", \
-                        "dbus-broker.service", \
-                        "user@0.service", \
-                        "chronyd.service", \
-                        "systemd-logind.service", \
-                        "systemd-udevd.service"]
+                sablame_list = get_test_result_list(data, "sablame")
+
                 for key2 in sablame_list:
                     print_stats(data,\
                       ["test_results", "sablame", key2], filename)
