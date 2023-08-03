@@ -93,7 +93,7 @@ def item_generator(json_input, lookup_key):
             yield from item_generator(item, lookup_key)
 '''
 
-def print_stats(data_dict, json_path, fname):
+def calc_stats(data_dict, json_path, fname):
     # Initialize for calcs
     extract_list = []
     value_list = []
@@ -105,8 +105,12 @@ def print_stats(data_dict, json_path, fname):
         else:
             pass
 
+    stat_keys = [ 'name', 'samples', 'mean', 'std_dev', 'percent_sd' ]
+    stat = dict.fromkeys(stat_keys)
+    stat['name']= json_path[-1]
     # Check for a list with less than 2 values, if so skip it
     vl_length = len(value_list)
+    stat['samples'] = vl_length
     if vl_length > 1:
         # Print MEAN, STDDEV and %SD aka co-efficient of variation
         mean = statistics.mean(value_list)
@@ -115,14 +119,23 @@ def print_stats(data_dict, json_path, fname):
             percent_sd = 0.0  # avoid divide-by-zero
         else:
             percent_sd = ((std_dev / mean) * 100)
-        print("> % s  " %(json_path[-1]) +\
-              "% s Samples  " %(vl_length) +\
-              "MEAN: % s  " %(round(mean, 2)) +\
-              "STD_DEV: % s  " %(round(std_dev, 2)) +\
-              "PERCENT_SD: % s" %(round(percent_sd, 1)))
-    else:
-        print("> % s  " %(json_path[-1]) +\
-              "% s Samples - SKIPPED" %(vl_length)) 
+
+        stat.update({
+            'mean': round(mean, 2),
+            'std_dev': round(std_dev, 2),
+            'percent_sd': round(percent_sd, 1)
+            })
+
+    return stat
+
+def print_statistics(stats):
+    for stat in stats:
+        print("> % s  " %(stat['name']) +\
+              "% s Samples  " %(stat['samples']) +\
+              "MEAN: % s  " %(stat['mean']) +\
+              "STD_DEV: % s  " %(stat['std_dev']) +\
+              "PERCENT_SD: % s" %(stat['percent_sd']))
+
 
 
 # Function to get the list of keys across multiple runs
@@ -136,6 +149,7 @@ def get_test_result_list(data, metric):
     unique_keys = list(dict.fromkeys(keys_list))
 
     return unique_keys
+
 
 
 
@@ -159,20 +173,28 @@ for filename in os.listdir(dir):
                 print("systemd-analyze time:")
                 satime_list = get_test_result_list(data, "satime")
 
+                satime_stats = []
                 for key1 in satime_list:
-                    print_stats(data,\
-                      ["test_results", "satime", key1], filename)
-
+                    satime_stats.append(calc_stats(data,\
+                      ["test_results", "satime", key1], filename))
+                print_statistics(satime_stats)
 
                 print("systemd-analyze blame:")
                 sablame_list = get_test_result_list(data, "sablame")
 
+                sablame_stats = []
                 for key2 in sablame_list:
-                    print_stats(data,\
-                      ["test_results", "sablame", key2], filename)
+                    sablame_stats.append(calc_stats(data,\
+                      ["test_results", "sablame", key2], filename))
+                print_statistics(
+                        sorted(sablame_stats,
+                               key=lambda x: (x['samples'], x['mean']), # Sort by samples then mean
+                               reverse=True)
+                        )
+
 
                 print("DMESG link-is-up:")
-                print_stats(data,\
-                  ["test_results", "reboot", "link_is_up"], filename)
-
-                print()
+                dmesg_stats = [] 
+                dmesg_stats.append(calc_stats(data,\
+                  ["test_results", "reboot", "link_is_up"], filename))
+                print_statistics(dmesg_stats)
