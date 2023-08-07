@@ -14,10 +14,26 @@ import json
 import statistics
 import os
 import fnmatch
-from collections import OrderedDict
+import csv
+import argparse
+import glob
 
 ###############################################################
 # FUNCTIONS Begin
+def parse_args():
+    parser = argparse.ArgumentParser(\
+            description='calculates variance statistics for systemd-analyze by \
+                    parsing \'sa_time\' JSON object for startup section timings \
+                    kernel, initrd, userspace, total \
+                    Also parses \'sa_blame\' JSON object for systemd services')
+
+    parser.add_argument(
+            'json_file',
+            nargs='+',
+            help='files to calculate statistics' )
+
+    return parser.parse_args()
+
 def extract_json_element(obj, path):
     '''
     Extracts an element from a nested dictionary or
@@ -151,50 +167,66 @@ def get_test_result_list(data, metric):
     return unique_keys
 
 
-
-
 # FUNCTIONS End
 ###############################################################
 
-# Iterate over the JSON files
-##dir = 'JSONs'
-dir = '.'
-
-for filename in os.listdir(dir):
-    if fnmatch.fnmatch(filename, '*.json'):
-##    if fnmatch.fnmatch(filename, 'ride4ER3*.json'):
-        f = os.path.join(dir, filename)
-        if os.path.isfile(f):
-            # now open it, load JSON and print the stats
-            with open(f, 'r') as file:
-                data = json.load(file)
-
-                print("## " + f)
-                print("systemd-analyze time:")
-                satime_list = get_test_result_list(data, "satime")
-
-                satime_stats = []
-                for key1 in satime_list:
-                    satime_stats.append(calc_stats(data,\
-                      ["test_results", "satime", key1], filename))
-                print_statistics(satime_stats)
-
-                print("systemd-analyze blame:")
-                sablame_list = get_test_result_list(data, "sablame")
-
-                sablame_stats = []
-                for key2 in sablame_list:
-                    sablame_stats.append(calc_stats(data,\
-                      ["test_results", "sablame", key2], filename))
-                print_statistics(
-                        sorted(sablame_stats,
-                               key=lambda x: (x['samples'], x['mean']), # Sort by samples then mean
-                               reverse=True)
-                        )
 
 
-                print("DMESG link-is-up:")
-                dmesg_stats = [] 
-                dmesg_stats.append(calc_stats(data,\
-                  ["test_results", "reboot", "link_is_up"], filename))
-                print_statistics(dmesg_stats)
+# Main function
+def main(argv):
+    # Iterate over the JSON files
+    ##dir = 'JSONs'
+    # Parse command line args, environment, etc.
+    dir = '.'
+
+    args = parse_args()
+
+    for filename in args.json_file:
+        if fnmatch.fnmatch(filename, '*.json'):
+    ##    if fnmatch.fnmatch(filename, 'ride4ER3*.json'):
+            f = os.path.join(dir, filename)
+            if os.path.isfile(f):
+                # now open it, load JSON and print the stats
+                with open(f, 'r') as file:
+                    data = json.load(file)
+
+                    print("## " + f)
+                    print("systemd-analyze time:")
+                    satime_list = get_test_result_list(data, "satime")
+
+                    satime_stats = []
+                    for key1 in satime_list:
+                        satime_stats.append(calc_stats(data,\
+                          ["test_results", "satime", key1], filename))
+                    print_statistics(satime_stats)
+
+                    print("systemd-analyze blame:")
+                    sablame_list = get_test_result_list(data, "sablame")
+
+                    sablame_stats = []
+                    for key2 in sablame_list:
+                        sablame_stats.append(calc_stats(data,\
+                          ["test_results", "sablame", key2], filename))
+                    print_statistics(
+                            sorted(sablame_stats,
+                                   key=lambda x: (x['samples'], x['mean']), # Sort by samples then mean
+                                   reverse=True)
+                            )
+
+                    #stat_keys = [ 'name', 'samples', 'mean', 'std_dev', 'percent_sd' ]
+                    #with open('sablame_' + filename + ".csv", 'w') as f:
+                    #     writer = csv.DictWriter(f, fieldnames=stat_keys)
+                    #     writer.writeheader()
+                    #     writer.writerows(sablame_stats)
+                    #    #json_output = json.dumps(sablame_stats)
+                    #    #f.write(json_output)
+
+                    print("DMESG link-is-up:")
+                    dmesg_stats = [] 
+                    dmesg_stats.append(calc_stats(data,\
+                      ["test_results", "reboot", "link_is_up"], filename))
+                    print_statistics(dmesg_stats)
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
