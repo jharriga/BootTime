@@ -32,6 +32,13 @@ def parse_args():
             nargs='+',
             help='files to calculate statistics' )
 
+    parser.add_argument(
+            '-o',
+            '--output-file',
+            choices=['csv', 'json'],
+            help='output results in stdout, csv, json',
+            required=False,
+            )
     return parser.parse_args()
 
 def extract_json_element(obj, path):
@@ -152,6 +159,7 @@ def print_statistics(stats):
               "STD_DEV: % s  " %(stat['std_dev']) +\
               "PERCENT_SD: % s" %(stat['percent_sd']))
 
+#def write_statistics(stats):
 
 
 # Function to get the list of keys across multiple runs
@@ -173,7 +181,7 @@ def get_test_result_list(data, metric):
 
 
 # Main function
-def main(argv):
+def main():
     # Iterate over the JSON files
     ##dir = 'JSONs'
     # Parse command line args, environment, etc.
@@ -189,44 +197,52 @@ def main(argv):
                 # now open it, load JSON and print the stats
                 with open(f, 'r') as file:
                     data = json.load(file)
+                    all_stats = {}
 
                     print("## " + f)
-                    print("systemd-analyze time:")
                     satime_list = get_test_result_list(data, "satime")
 
                     satime_stats = []
                     for key1 in satime_list:
                         satime_stats.append(calc_stats(data,\
                           ["test_results", "satime", key1], filename))
-                    print_statistics(satime_stats)
+                    all_stats['satime_stats'] = satime_stats
 
-                    print("systemd-analyze blame:")
                     sablame_list = get_test_result_list(data, "sablame")
 
                     sablame_stats = []
                     for key2 in sablame_list:
                         sablame_stats.append(calc_stats(data,\
                           ["test_results", "sablame", key2], filename))
-                    print_statistics(
+                    # Sort by samples then mean
+                    all_stats['sablame_stats'] = \
                             sorted(sablame_stats,
-                                   key=lambda x: (x['samples'], x['mean']), # Sort by samples then mean
+                                   key=lambda x: (x['samples'], x['mean']), 
                                    reverse=True)
-                            )
 
-                    #stat_keys = [ 'name', 'samples', 'mean', 'std_dev', 'percent_sd' ]
-                    #with open('sablame_' + filename + ".csv", 'w') as f:
-                    #     writer = csv.DictWriter(f, fieldnames=stat_keys)
-                    #     writer.writeheader()
-                    #     writer.writerows(sablame_stats)
-                    #    #json_output = json.dumps(sablame_stats)
-                    #    #f.write(json_output)
-
-                    print("DMESG link-is-up:")
-                    dmesg_stats = [] 
+                    dmesg_stats = []
                     dmesg_stats.append(calc_stats(data,\
                       ["test_results", "reboot", "link_is_up"], filename))
-                    print_statistics(dmesg_stats)
+                    all_stats['dmesg_stats'] = dmesg_stats
+
+
+                    # Print stats and output to a file if needed
+                    filename_without_ext = os.path.splitext(filename)[0]
+                    for key, stat in all_stats.items():
+                        print(key + ":")
+                        print_statistics(stat)
+                        if args.output_file == 'csv':
+                            with open("stats_" + filename_without_ext + '_' + key + ".csv", 'w') as f:
+                                headers = stat[0].keys()
+                                writer = csv.DictWriter(f, headers)
+                                writer.writeheader()
+                                writer.writerows(stat)
+
+                    if args.output_file == 'json':
+                        with open("stats_" + filename, 'w') as f:
+                            f.write(json.dumps(all_stats))
+
+
 
 if __name__ == '__main__':
-    import sys
-    main(sys.argv)
+    main()
