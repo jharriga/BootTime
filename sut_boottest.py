@@ -5,21 +5,8 @@
 # Tested on CentOS Stream 8 - Python 3.6.8.
 # DEPENDENCIES: # python3 -m pip install paramiko
 #
-# Set this to your systems network-link-is-up string found in DMESG
-# net_str = [
-#         '"Link is Up"',
-#         '"link is up"',
-#         '"link is ready"',
-#         '"link becomes ready"',
-#         '"eth0"',
-#         ]
-
-
-#net_str = '"link is up"'            # RHIVOS ER1 on RPI4
-#net_str = '"link is ready"'         # RHIVOS ER1.2 on RPI4
-net_str = '"link becomes ready"'    # RHIVOS ER1.2 on QDrive3
-#net_str = '"eth0"'                  # RHIVOS ER2 on QDrive3
-#net_str = '"Link is Up"'                  # RHIVOS ER3 on QDrive3
+# grep string that covers the known premutations for when first link is ready
+net_str = '-Ei "link.*(ready|up)"'
 
 #####################################
 # DICTIONARY Format - dicts initialized in main()
@@ -478,13 +465,20 @@ def phase3(ip, usr, passwd):
     #[   15.744369] atlantic 0002:81:00.0 eth0: atlantic: link change...
     #[   15.746078] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
     # dmesg | grep -m 1 eth0 | cut -d "[" -f2 | cut -d "]" -f1
-    cmd_linkup = "dmesg | grep -m 1 {} | cut -d '[' -f2 | cut -d ']' -f1".format(net_str)
+    cmd_linkup = "dmesg | grep -m 1 {}".format(net_str)
+
     stdin, stdout, stderr = ssh_new.exec_command(cmd_linkup, get_pty=True)
     # Block on completion of exec_command
     exit_status = stdout.channel.recv_exit_status()
+
+    if exit_status:
+        print("ERROR: Unable to find first link is up string. Check `net_str`.")
+        sys.exit(1)
     cmdres_linkup = stdout.read().decode('utf8').rstrip('\n')
+    pattern = r'\[([\d.]+)\]'
+    linkup_timestamp = re.findall(r'\[\s*([\d.]+)\]', cmdres_linkup)
 # Test for valid value
-    ph3_dict['link_is_up'] = float(cmdres_linkup)
+    ph3_dict['link_is_up'] = float(linkup_timestamp[0])
 # Set to 0.0 if value is invalid
 #    ph3_dict['link_is_up'] = float(0.0)
     
