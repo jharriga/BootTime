@@ -105,7 +105,14 @@ def parse_args():
             '--samples',
             type=int,
             default='1',
-            help='Password to login to device',
+            help='Number of samples to collect',
+            )
+    parser.add_argument(
+            '-b',
+            '--blame-count',
+            type=int,
+            default='10',
+            help='Number of services to collect for systemd-analzye blame',
             )
 
     return parser.parse_args()
@@ -576,7 +583,6 @@ retry_int = 2                 # client.connect retry interval (in sec)
 # MAIN
 
 def main():
-    blame_cnt = 10            # number of sablame services to record
 
     
     # Parse CLI args and assign them to their respective variables
@@ -585,6 +591,7 @@ def main():
             args.hostname, args.ip, args.username, args.password 
             )
     run_count = args.samples
+    blame_cnt = args.blame_count
 
     ##########################
     # OUTER LOOP - For each SUT
