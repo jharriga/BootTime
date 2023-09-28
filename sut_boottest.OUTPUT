@@ -1,36 +1,23 @@
-[root@acer BootCode]# python3 sut_boottest.py -s 10 rideSX4 10.19.243.222 root password
+[root@acer BootTime]# python3 sut_boottest.py -s 1 rideSX4 10.19.243.222 root password
+***SUT: 10.19.243.222  rideSX4  Number of Runs: 1***
 
-***SUT: 192.168.0.108  testrpi4***
-> testssh: verifying SSH to 192.168.0.108. Timeout: 20s
+** Run: 1 **
+> testssh: verifying SSH to 10.19.243.222. Timeout: 20s
 *Phase 1 - gather facts
 *Phase 2 - configure SUT for reboot
 *Phase 3 - initiate reboot and wait for system readiness
-> testssh: verifying SSH to 192.168.0.108. Timeout: 300s
-phase3: SUT 192.168.0.108,  waiting 300s for reboot to complete...
-phase3: SUT shutdown and reboot required 5.76 seconds
-> testssh: verifying SSH to 192.168.0.108. Timeout: 20s
-*Phase 4 - record systemd-analyze reboot stats
-*Phase 5 - neptune timing stats (if available)
-
-***SUT: 192.168.0.111  rpi4***
-> testssh: verifying SSH to 192.168.0.111. Timeout: 20s
-*Phase 1 - gather facts
-*Phase 2 - configure SUT for reboot
-*Phase 3 - initiate reboot and wait for system readiness
-> testssh: verifying SSH to 192.168.0.111. Timeout: 300s
-phase3: SUT 192.168.0.111,  waiting 300s for reboot to complete...
-phase3: SUT shutdown and reboot required 5.68 seconds
-> testssh: verifying SSH to 192.168.0.111. Timeout: 20s
+Socket exception: Connection reset by peer (104)
+> testssh: verifying SSH to 10.19.243.222. Timeout: 300s
+phase3: SUT 10.19.243.222,  waiting 300s for reboot to complete...
+phase3: SUT shutdown and reboot required 60.85 seconds
+> testssh: verifying SSH to 10.19.243.222. Timeout: 20s
 *Phase 4 - record systemd-analyze reboot stats
 *Phase 5 - neptune timing stats (if available)
 neptune_stats: neptune-ui startup timing stats unavailable on SUT, skipping
-
-***SUT: 192.168.0.120  johnagx***
-> testssh: verifying SSH to 192.168.0.120. Timeout: 20s
-testssh: Could not connect to 192.168.0.120. Timed out
-+++TESTING COMPLETED+++
-Wrote file: JSON_final.json
- 
-
-
-
+*Phase 5 - initramfs timing stats
+*Phase 6 - earlyservice timing stats
+*Phase 7 - dklm timing stats
+*Phase 8 - clktick timing stats
++++TESTING for rideSX4 COMPLETED+++
+Wrote file: rideSX4_09_28_2023_09_51_26.json
++++TESTING for all systems COMPLETED+++
