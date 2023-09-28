@@ -1,0 +1,50 @@
+time# ./calcstats_json.py rideSX4_09_28_2023_09_58_03.json 
+## ./rideSX4_09_28_2023_09_58_03.json
+initramfs:
+> unpack_ts  2 Samples  MEAN: 0.0967  STD_DEV: 0.0238  PERCENT_SD: 24.5772
+> init_ts  2 Samples  MEAN: 0.3513  STD_DEV: 0.0297  PERCENT_SD: 8.4505
+> unpack_init_int  2 Samples  MEAN: 0.2546  STD_DEV: 0.0059  PERCENT_SD: 2.3223
+> systemd_ts  2 Samples  MEAN: 0.3656  STD_DEV: 0.0299  PERCENT_SD: 8.1845
+> init_systemd_int  2 Samples  MEAN: 0.0143  STD_DEV: 0.0002  PERCENT_SD: 1.6589
+earlyservice:
+> systemd_ts  2 Samples  MEAN: 0.3656  STD_DEV: 0.0299  PERCENT_SD: 8.1845
+> earlyservice_ts  2 Samples  MEAN: 0.5075  STD_DEV: 0.0357  PERCENT_SD: 7.0285
+> systemd_earlyservice_int  2 Samples  MEAN: 0.1419  STD_DEV: 0.0057  PERCENT_SD: 4.049
+dklm:
+> systemd_ts  2 Samples  MEAN: 0.3656  STD_DEV: 0.0299  PERCENT_SD: 8.1845
+> udev_ts  2 Samples  MEAN: 0.5047  STD_DEV: 0.0357  PERCENT_SD: 7.0781
+> systemd_udev_int  2 Samples  MEAN: 0.1391  STD_DEV: 0.0058  PERCENT_SD: 4.1696
+> start_kmod_load_ts  2 Samples  MEAN: 0.5151  STD_DEV: 0.0359  PERCENT_SD: 6.9663
+> udev_start_kmod_load_int  2 Samples  MEAN: 0.0104  STD_DEV: 0.0002  PERCENT_SD: 1.5381
+> finish_kmod_load_ts  2 Samples  MEAN: 0.5312  STD_DEV: 0.036  PERCENT_SD: 6.7858
+> start_kmod_load_finish_kmod_load_int  2 Samples  MEAN: 0.0161  STD_DEV: 0.0002  PERCENT_SD: 0.9986
+clktick:
+> primary_entry_ts  2 Samples  MEAN: 4.3172  STD_DEV: 0.0037  PERCENT_SD: 0.0856
+> time_init_ts  2 Samples  MEAN: 5.0356  STD_DEV: 0.0055  PERCENT_SD: 0.1095
+> setup_arch_ts  2 Samples  MEAN: 4.889  STD_DEV: 0.0052  PERCENT_SD: 0.1063
+> primary_entry_time_init_int  2 Samples  MEAN: 0.7184  STD_DEV: 0.0018  PERCENT_SD: 0.2528
+reboot:
+> reboot_et  2 Samples  MEAN: 60.94  STD_DEV: 0.0  PERCENT_SD: 0.01
+> ssh_et  2 Samples  MEAN: 0.32  STD_DEV: 0.03  PERCENT_SD: 8.86
+> sysctl_et  2 Samples  MEAN: 0.57  STD_DEV: 0.02  PERCENT_SD: 3.66
+> total_et  2 Samples  MEAN: 0.89  STD_DEV: 0.01  PERCENT_SD: 0.86
+> link_is_up  2 Samples  MEAN: 7.2  STD_DEV: 0.11  PERCENT_SD: 1.59
+> boot_tgt  0 Samples  MEAN: None  STD_DEV: None  PERCENT_SD: None
+satime:
+> kernel  2 Samples  MEAN: 0.35  STD_DEV: 0.04  PERCENT_SD: 10.02
+> initrd  2 Samples  MEAN: 2.46  STD_DEV: 0.09  PERCENT_SD: 3.66
+> userspace  2 Samples  MEAN: 4.43  STD_DEV: 0.0  PERCENT_SD: 0.1
+> total  2 Samples  MEAN: 7.24  STD_DEV: 0.12  PERCENT_SD: 1.67
+sablame:
+> initrd-switch-root.service  2 Samples  MEAN: 1.44  STD_DEV: 0.03  PERCENT_SD: 2.36
+> NetworkManager.service  2 Samples  MEAN: 1.08  STD_DEV: 0.01  PERCENT_SD: 0.59
+> auditd.service  2 Samples  MEAN: 1.04  STD_DEV: 0.03  PERCENT_SD: 3.32
+> dbus-broker.service  2 Samples  MEAN: 0.7  STD_DEV: 0.04  PERCENT_SD: 5.04
+> user@0.service  2 Samples  MEAN: 0.54  STD_DEV: 0.01  PERCENT_SD: 1.05
+> systemd-logind.service  2 Samples  MEAN: 0.53  STD_DEV: 0.01  PERCENT_SD: 2.69
+> chronyd.service  2 Samples  MEAN: 0.48  STD_DEV: 0.06  PERCENT_SD: 11.74
+> systemd-udevd.service  2 Samples  MEAN: 0.33  STD_DEV: 0.0  PERCENT_SD: 0.43
+> initrd-cleanup.service  2 Samples  MEAN: 0.27  STD_DEV: 0.05  PERCENT_SD: 18.8
+> systemd-udev-trigger.service  2 Samples  MEAN: 0.25  STD_DEV: 0.0  PERCENT_SD: 1.13
+neptuneui:
+> N/A
