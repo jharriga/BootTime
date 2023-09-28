@@ -1,4 +1,4 @@
-[root@acer BootCode]# python3 sut_boottest.py 
+[root@acer BootCode]# python3 sut_boottest.py -s 10 rideSX4 10.19.243.222 root password
 
 ***SUT: 192.168.0.108  testrpi4***
 > testssh: verifying SSH to 192.168.0.108. Timeout: 20s
