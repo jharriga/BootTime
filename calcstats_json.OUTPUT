@@ -1,5 +1,5 @@
-time# ./calcstats_json.py rideSX4_09_28_2023_09_58_03.json 
-## ./rideSX4_09_28_2023_09_58_03.json
+time# ./calcstats_json.py system1_09_28_2023_09_58_03.json 
+## ./system1_09_28_2023_09_58_03.json
 initramfs:
 > unpack_ts  2 Samples  MEAN: 0.0967  STD_DEV: 0.0238  PERCENT_SD: 24.5772
 > init_ts  2 Samples  MEAN: 0.3513  STD_DEV: 0.0297  PERCENT_SD: 8.4505
