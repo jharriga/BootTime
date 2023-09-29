@@ -9,7 +9,7 @@ sut_boottest.py : performs boot test runs (sut_boottestREADME.pdf: documents aut
 
 calcstats_json.py : post processes sut_boottest.py produced JSON file
 * calculates mean and run-to-run variance stats for markers across multiple runs
-* See sample output: calc_stats.OUTPUT
+* See sample output: calcstats_json.OUTPUT
 * USAGE: # ./calc_stats.py hostname.json
 
 systemd_unitfile/
