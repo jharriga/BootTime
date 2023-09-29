@@ -37,6 +37,6 @@ neptune_stats: neptune-ui startup timing stats unavailable on SUT, skipping
 *Phase 7 - dklm timing stats
 *Phase 8 - clktick timing stats
 
-+++TESTING for rideSX4 COMPLETED+++
-Wrote file: rideSX4_09_28_2023_09_51_26.json
++++TESTING for system1 COMPLETED+++
+Wrote file: system1_09_28_2023_09_51_26.json
 +++TESTING for all systems COMPLETED+++
