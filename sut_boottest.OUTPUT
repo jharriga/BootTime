@@ -1,5 +1,5 @@
-[root@acer BootTime]# python3 sut_boottest.py -s 2 rideSX4 10.19.243.222 root password
-***SUT: 10.19.243.222  rideSX4  Number of Runs: 2***
+[root@acer BootTime]# ./sut_boottest.py -s 2 system1 10.19.243.222 root password
+***SUT: 10.19.243.222  system1  Number of Runs: 2***
 
 ** Run: 1 **
 > testssh: verifying SSH to 10.19.243.222. Timeout: 20s
